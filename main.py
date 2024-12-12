@@ -36,7 +36,7 @@ if uploaded_file is not None:
 
     st.divider()
 
-    st.subheader('Filter Data')
+    st.subheader('Filter Data Viewer')
     columns = df.columns.tolist()
     selected_column = st.selectbox('Select column to filter by', columns)
     unique_values = df[selected_column].unique()
@@ -45,13 +45,13 @@ if uploaded_file is not None:
     filtered_df = df[df[selected_column] == selected_value]
     st.write(filtered_df)
 
-    st.subheader('Scatter Plot for Filtered Data')
-    x_column = st.selectbox('Select X-axis column', columns)
-    y_column = st.selectbox('Select Y-axis column', columns)
+    # st.subheader('Scatter Plot for Filtered Data')
+    # x_column = st.selectbox('Select X-axis column', columns)
+    # y_column = st.selectbox('Select Y-axis column', columns)
 
-    if st.button('Generate Plot'):
-        st.scatter_chart(filtered_df.set_index(x_column)[y_column])
+    # if st.button('Generate Plot'):
+    #     st.scatter_chart(filtered_df.set_index(x_column)[y_column])
     
-    st.divider()
+    # st.divider()
 else:
     st.write('Press "Browse Files" to Upload Data')
