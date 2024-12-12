@@ -2,5 +2,5 @@ pandas
 streamlit
 matplotlib
 pygwalker
-ydata_profiling
+ydata_profiling==3.6.2
 streamlit_pandas_profiling
