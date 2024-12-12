@@ -2,14 +2,12 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
-from ydata_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
 
 st.set_page_config(
     page_title = 'Dashboard for EDA',
     layout = 'wide',
 )
-st.title('Dashboard for EDA')
 
 uploaded_file = st.file_uploader(
         'Choose a CSV file', 
@@ -21,9 +19,9 @@ if uploaded_file is not None:
 
     st.subheader('Data Summary')
     st.dataframe(df)
-    st.write(df.describe([.25,.75,.9,.95]))
+    data_summary = df.describe([.25,.75,.9,.95])
     data_types = df.dtypes.to_frame('Types')
-    st.write(data_types.sort_values('Types'))
+    st.write(data_summary, data_types.sort_values('Types'))
     
     st.divider()
 
@@ -55,8 +53,5 @@ if uploaded_file is not None:
         st.scatter_chart(filtered_df.set_index(x_column)[y_column])
     
     st.divider()
-    
-    pr = df.profile_report()
-    st_profile_report(pr)
 else:
     st.write('Press "Browse Files" to Upload Data')
