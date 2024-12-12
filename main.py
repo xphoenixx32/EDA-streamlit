@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
 
 st.set_page_config(
@@ -49,8 +49,8 @@ if uploaded_file is not None:
     x_column = st.selectbox('Select X-axis column', columns)
     y_column = st.selectbox('Select Y-axis column', columns)
 
-    if st.button('Generate Plot'):
-        st.scatter_chart(filtered_df.set_index(x_column)[y_column])
+    # if st.button('Generate Plot'):
+    #     st.scatter_chart(filtered_df.set_index(x_column)[y_column])
     
     st.divider()
 else:
