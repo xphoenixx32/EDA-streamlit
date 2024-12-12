@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
+from ydata_profiling import ProfileReport
+from streamlit_pandas_profiling import st_profile_report
 
 st.set_page_config(
     page_title = 'Dashboard for EDA',
@@ -29,7 +31,7 @@ if uploaded_file is not None:
 
     @st.cache_resource
     def get_pyg_renderer() -> 'StreamlitRenderer':
-        return StreamlitRenderer(df, spec = './gw_config.json')
+        return StreamlitRenderer(df, spec = './gw_config.json', spec_io_mode = 'rw')
 
     renderer = get_pyg_renderer()
     renderer.explorer()
@@ -45,13 +47,16 @@ if uploaded_file is not None:
     filtered_df = df[df[selected_column] == selected_value]
     st.write(filtered_df)
 
-    # st.subheader('Scatter Plot for Filtered Data')
-    # x_column = st.selectbox('Select X-axis column', columns)
-    # y_column = st.selectbox('Select Y-axis column', columns)
+    st.subheader('Scatter Plot for Filtered Data')
+    x_column = st.selectbox('Select X-axis column', columns)
+    y_column = st.selectbox('Select Y-axis column', columns)
 
-    # if st.button('Generate Plot'):
-    #     st.scatter_chart(filtered_df.set_index(x_column)[y_column])
+    if st.button('Generate Plot'):
+        st.scatter_chart(filtered_df.set_index(x_column)[y_column])
     
     st.divider()
+    
+    pr = df.profile_report()
+    st_profile_report(pr)
 else:
     st.write('Press "Browse Files" to Upload Data')
