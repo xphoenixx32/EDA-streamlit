@@ -1,12 +1,14 @@
 import streamlit as st
 import seaborn as sns
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
+#------------------------------------------------------------------------------------------------------#
 
 st.title('EDA Toolkit')
-
 sns.set_theme(style = "whitegrid")
+#------------------------------------------------------------------------------------------------------#
 
 # Allow user to upload a file or choose a predefined dataset
 st.subheader("Upload or Select a Dataset")
@@ -15,6 +17,7 @@ uploaded_file = st.file_uploader(
     'Choose a CSV file',
     type = 'csv',
 )
+#------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
 dataset_options = ['penguins', 'titanic', 'diamonds', 'iris', 'exercise', 'tips']
@@ -22,6 +25,7 @@ selected_dataset = st.selectbox(
     'Or select a dataset from the list below:',
     ['None'] + dataset_options  # Add 'None' for default empty selection
 )
+#------------------------------------------------------------------------------------------------------#
 
 # Load the selected dataset or uploaded file
 if uploaded_file is not None:
@@ -32,19 +36,24 @@ elif selected_dataset != 'None':
     st.success(f"Loaded `{selected_dataset}` dataset from seaborn.")
 else:
     df = None
-    st.warning("No dataset loaded. Please upload a file or select a dataset.")
+    st.warning(" ▶️ Press [Browse Files] to Upload or Select a Dataset Above.")
+#------------------------------------------------------------------------------------------------------#
 
 # Proceed only if a dataset is loaded
 if df is not None:
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['1️⃣ Summary Info', 
-                                            '2️⃣ Filter & View', 
-                                            '3️⃣ 1-D Plot', 
-                                            '4️⃣ 2-D Plot', 
-                                            '⛔ Interactive Dashboard'])
-
-    ###################################################
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([' 🔍 Summary Info ', 
+                                                        ' 🔍 Filter & View ', 
+                                                        ' 📊 Violin & Area Plot ', 
+                                                        ' 📊 Cross-Density Plot ', 
+                                                        ' 📊 Correlation Matrix ',
+                                                        ' 📊 Pair Plot ', 
+                                                        ' ⛔ Interactive Dashboard '])
+    #------------------------------------------------------------------------------------------------------#
     with tab1:
+        st.warning(" Summary & Data types of the Dataset ")
         st.dataframe(df)
+        
+        st.divider()
         
         # Only describe numeric columns
         numeric_df = df.select_dtypes(include=['number'])
@@ -52,15 +61,16 @@ if df is not None:
             st.write(numeric_df.describe([.25, .75, .9, .95]))
         else:
             st.write("No numeric columns to describe.")
-
+        
+        st.divider()
+        
         # Data types overview
         data_types = df.dtypes.to_frame('Types')
         data_types['Types'] = data_types['Types'].astype(str)  # Convert to strings for sorting
         st.write(data_types.sort_values('Types'))
-
-        st.divider()
-    ###################################################
+    #------------------------------------------------------------------------------------------------------#
     with tab2:
+        st.warning(" Filter & View on Specific Column & Value ")
         # Filter Data Section
         columns = df.columns.tolist()
 
@@ -79,28 +89,32 @@ if df is not None:
         # Filter DataFrame
         filtered_df = df[df[selected_column].astype(str) == selected_value]
         st.write(filtered_df)
-    ###################################################
+    #------------------------------------------------------------------------------------------------------#
     with tab3:
+        st.warning(" Realize the Concentration of Data points ")
+        
         # Filter numeric and categorical columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
         categorical_columns = df.select_dtypes(include = ['object', 'category']).columns.tolist()
 
         if numeric_columns and categorical_columns:
             # Allow user to select a categorical column and a numeric column
-            selected_category_column = st.selectbox('Select Categorical Column', 
-                                                    categorical_columns, 
+            selected_category_column = st.selectbox('Select Categorical Column',
+                                                    categorical_columns,
                                                     key = 'category_selector_tab3',
                                                     )
-            selected_numeric_column = st.selectbox('Select Numeric Column', 
-                                                   numeric_columns, 
-                                                   key = 'numeric_selector_tab3',
-                                                   )
+            selected_numeric_column = st.selectbox('Select Numeric Column',
+                                                numeric_columns,
+                                                key = 'numeric_selector_tab3',
+                                                )
+
+            st.divider()
 
             if selected_category_column and selected_numeric_column:
-                # Plot violin plot
-                st.write(f'Violin plot of {selected_numeric_column} grouped by {selected_category_column}')
+                # #1 Violin plot
+                st.subheader(f'Violin plot of {selected_numeric_column} by {selected_category_column}')
 
-                fig, ax = plt.subplots(figsize=(12, 6))
+                fig, ax = plt.subplots(figsize = (12, 6))
                 sns.violinplot(
                     data = df,
                     x = selected_category_column,
@@ -108,21 +122,39 @@ if df is not None:
                     palette = "muted",
                     ax = ax,
                 )
-                ax.set_title(f'Violin Plot of {selected_numeric_column} by {selected_category_column}')
                 ax.set_xlabel(selected_category_column)
                 ax.set_ylabel(selected_numeric_column)
-
-                # Display the plot
+                
                 st.pyplot(fig)
+                
+                st.divider()
+
+                # #2 Displot
+                st.subheader(f'Area Distribution of {selected_numeric_column} by {selected_category_column}')
+                
+                sns_displot = sns.displot(
+                    data = df,
+                    x = selected_numeric_column,
+                    hue = selected_category_column,
+                    kind = "kde",
+                    height = 6,
+                    multiple = "fill",
+                    clip = (0, None),
+                    palette = "ch:rot = -.25, hue = 1, light = .75",
+                )
+
+                st.pyplot(sns_displot.fig)
         else:
             st.write("Ensure your dataset contains both numeric and categorical columns.")
-    ###################################################
+    #------------------------------------------------------------------------------------------------------#
     with tab4:
+        st.warning(" Brief Realization on Cross-Correlation Between Numeric Var ")
+        
         # Filter numeric columns
-        numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
+        numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
 
         # Filter categorical columns
-        categorical_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+        categorical_columns = df.select_dtypes(include = ['object', 'category']).columns.tolist()
 
         if numeric_columns and categorical_columns:
             # Allow user to select a categorical column
@@ -175,11 +207,72 @@ if df is not None:
                 # Hide unused subplots
                 for i in range(num_categories, len(axes)):
                     axes[i].axis('off')
-                
                 # Display the plot
                 st.pyplot(fig)
-    ###################################################
+    #------------------------------------------------------------------------------------------------------#
     with tab5:
+        st.warning(" Correlation Matrix between Numeric Var ")
+        
+        # Filter numeric columns
+        numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
+        
+        if numeric_columns:
+            st.write("Numeric columns detected:", numeric_columns)
+            
+            # Compute correlation matrix
+            correlation_matrix = df[numeric_columns].corr()
+
+            # Mask to hide the upper triangle
+            mask = np.triu(np.ones_like(correlation_matrix, dtype = bool))
+
+            # Plot the heatmap
+            fig, ax = plt.subplots(figsize=(10, 8))
+            sns.heatmap(
+                correlation_matrix,
+                mask = mask,  # Apply the mask to hide the upper triangle
+                annot = True,
+                cmap = "coolwarm",
+                fmt = ".2f",
+                ax = ax
+            )
+            ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
+            
+            # Display the plot
+            st.pyplot(fig)
+        else:
+            st.write("Ensure your dataset contains both numeric and categorical columns.")
+    #------------------------------------------------------------------------------------------------------#
+    with tab6:
+        st.warning(" Pair Plot will take some time to Generate ")
+        
+        # Filter numeric and categorical columns
+        numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
+        categorical_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+
+        if numeric_columns and categorical_columns:
+            selected_category_column = st.selectbox('Select Categorical Column',
+                                                    categorical_columns,
+                                                    key = 'category_selector_tab6',
+                                                    )
+
+            if selected_category_column:
+                st.write(f"Selected Category: {selected_category_column}")
+
+                # Check if selected columns exist in df
+                if selected_category_column not in df.columns:
+                    st.error(f"Column {selected_category_column} not found in dataframe.")
+                else:
+                    # Generate pairplot
+                    pairplot_fig = sns.pairplot(df,
+                                                hue = selected_category_column,
+                                                vars = numeric_columns,
+                                                corner = True,
+                                                )
+                    st.pyplot(pairplot_fig)
+        else:
+            st.write("Ensure your dataset contains both numeric and categorical columns.")
+    #------------------------------------------------------------------------------------------------------#
+    with tab7:
         st.warning(" ⛔ Can only be used by the Developer ")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
@@ -190,6 +283,6 @@ if df is not None:
 
         renderer = get_pyg_renderer()
         renderer.explorer()
-    ###################################################
+    #------------------------------------------------------------------------------------------------------#
 else:
     st.write('Press "Browse Files" to Upload Data or Select a Dataset')
