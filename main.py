@@ -96,16 +96,18 @@ if df is not None:
         columns = df.columns.tolist()
 
         # Unique keys for selectbox
-        selected_column = st.selectbox('Select column to filter by',
-                                       columns,
-                                       key = 'column_selector_tab2',
-                                       )
+        selected_column = st.selectbox(
+          'Select column to filter by',
+          columns,
+          key = 'column_selector_tab2',
+        )
         unique_values = df[selected_column].dropna().unique()  # Drop NaNs for filtering
         unique_values = [str(value) for value in unique_values]  # Ensure all values are string
-        selected_value = st.selectbox('Select value',
-                                      unique_values,
-                                      key = 'value_selector_tab2',
-                                      )
+        selected_value = st.selectbox(
+          'Select value',
+          unique_values,
+          key = 'value_selector_tab2',
+        )
 
         # Filter DataFrame
         filtered_df = df[df[selected_column].astype(str) == selected_value]
@@ -120,14 +122,16 @@ if df is not None:
 
         if numeric_columns and categorical_columns:
             # Allow user to select a categorical column and a numeric column
-            selected_category_column = st.selectbox('Select Categorical Column',
-                                                    categorical_columns,
-                                                    key = 'category_selector_tab3',
-                                                    )
-            selected_numeric_column = st.selectbox('Select Numeric Column',
-                                                numeric_columns,
-                                                key = 'numeric_selector_tab3',
-                                                )
+            selected_category_column = st.selectbox(
+              'Select Categorical Column',
+              categorical_columns,
+              key = 'category_selector_tab3',
+            )
+            selected_numeric_column = st.selectbox(
+              'Select Numeric Column',
+              numeric_columns,
+              key = 'numeric_selector_tab3',
+            )
 
             st.divider()
 
@@ -179,22 +183,25 @@ if df is not None:
 
         if numeric_columns and categorical_columns:
             # Allow user to select a categorical column
-            selected_category_column = st.selectbox('Select Categorical Column',
-                                                    categorical_columns,
-                                                    key = 'category_selector_tab4',
-                                                    )
+            selected_category_column = st.selectbox(
+              'Select Categorical Column',
+              categorical_columns,
+              key = 'category_selector_tab4',
+            )
             unique_category_values = df[selected_category_column].unique().tolist()
 
             # Allow user to select numeric columns for X and Y axes
             st.info(" X & Y Should be Different ", icon = "ℹ️")
-            selected_x = st.selectbox('Select X-axis column',
-                                      numeric_columns,
-                                      key = 'x_axis_selector_tab4',
-                                      )
-            selected_y = st.selectbox('Select Y-axis column',
-                                      numeric_columns,
-                                      key = 'y_axis_selector_tab4',
-                                      )
+            selected_x = st.selectbox(
+              'Select X-axis column',
+              numeric_columns,
+              key = 'x_axis_selector_tab4',
+            )
+            selected_y = st.selectbox(
+              'Select Y-axis column',
+              numeric_columns,
+              key = 'y_axis_selector_tab4',
+            )
             if selected_x and selected_y:
                 # Create subplots based on the number of unique category values
                 num_categories = len(unique_category_values)
@@ -202,10 +209,11 @@ if df is not None:
                 rows = (num_categories + cols - 1) // cols  # Calculate rows needed
 
                 # Initialize the figure
-                fig, axes = plt.subplots(rows, cols,
-                                         figsize = (12, 6 * rows),
-                                         constrained_layout = True,
-                                         )
+                fig, axes = plt.subplots(
+                  rows, cols,
+                  figsize = (12, 6 * rows),
+                  constrained_layout = True,
+                )
                 axes = axes.flatten()  # Flatten axes for easy iteration
 
                 # Plot each category
@@ -235,7 +243,7 @@ if df is not None:
         st.warning(" Correlation Matrix between Numeric Var ")
         
         # Filter numeric columns
-        numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
+        numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
         
         if numeric_columns:
             st.write("Numeric columns detected:", numeric_columns)
@@ -247,14 +255,14 @@ if df is not None:
             mask = np.triu(np.ones_like(correlation_matrix, dtype = bool))
 
             # Plot the heatmap
-            fig, ax = plt.subplots(figsize=(10, 8))
+            fig, ax = plt.subplots(figsize = (10, 8))
             sns.heatmap(
                 correlation_matrix,
                 mask = mask,  # Apply the mask to hide the upper triangle
                 annot = True,
                 cmap = "coolwarm",
                 fmt = ".2f",
-                ax = ax
+                ax = ax,
             )
             ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
             
@@ -267,14 +275,15 @@ if df is not None:
         st.warning(" Comparison between Numeric Var GroupBy Categorical Var  ")
         
         # Filter numeric and categorical columns
-        numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
-        categorical_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+        numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
+        categorical_columns = df.select_dtypes(include = ['object', 'category']).columns.tolist()
 
         if numeric_columns and categorical_columns:
-            selected_category_column = st.selectbox('Select Categorical Column',
-                                                    categorical_columns,
-                                                    key = 'category_selector_tab6',
-                                                    )
+            selected_category_column = st.selectbox(
+              'Select Categorical Column',
+              categorical_columns,
+              key = 'category_selector_tab6',
+            )
 
             if selected_category_column:
                 st.write(f"Selected Category: {selected_category_column}")
@@ -284,12 +293,13 @@ if df is not None:
                     st.error(f"Column {selected_category_column} not found in dataframe.")
                 else:
                     # Generate pairplot
-                    pairplot_fig = sns.pairplot(df,
-                                                hue = selected_category_column,
-                                                vars = numeric_columns,
-                                                corner = True,
-                                                plot_kws = {'alpha': 0.7},
-                                               )
+                    pairplot_fig = sns.pairplot(
+                      df,
+                      hue = selected_category_column,
+                      vars = numeric_columns,
+                      corner = True,
+                      plot_kws = {'alpha': 0.7},
+                    )
                     
                     # Display the plot using Streamlit
                     st.pyplot(pairplot_fig)
@@ -301,10 +311,11 @@ if df is not None:
         st.info(" Switch [Settings] ➡️ [Appearance] ➡️ [Wide Mode] ", icon = "ℹ️")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
-            return StreamlitRenderer(df, 
-                                     spec='./gw_config.json', 
-                                     spec_io_mode = 'rw',
-                                    )
+            return StreamlitRenderer(
+              df, 
+              spec='./gw_config.json', 
+              spec_io_mode = 'rw',
+            )
 
         renderer = get_pyg_renderer()
         renderer.explorer()
