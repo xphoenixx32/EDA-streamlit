@@ -36,7 +36,6 @@ elif selected_dataset != 'None':
     st.success(f"Loaded `{selected_dataset}` dataset from seaborn.")
 else:
     df = None
-    st.warning(" ▶️ Press [Browse Files] to Upload or Select a Dataset Above.")
 #------------------------------------------------------------------------------------------------------#
 
 # Proceed only if a dataset is loaded
