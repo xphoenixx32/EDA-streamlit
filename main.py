@@ -154,6 +154,7 @@ if uploaded_file is not None:
         st.divider()
     ###################################################
     with tab5:
+        st.write("Remember to Switch [Settings] > [Appearance] > Turn On [Wide Mode]")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
             return StreamlitRenderer(df, spec='./gw_config.json', spec_io_mode='rw')
