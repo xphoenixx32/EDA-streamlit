@@ -11,13 +11,16 @@ sns.set_theme(style = "whitegrid")
 #------------------------------------------------------------------------------------------------------#
 
 # Allow user to upload a file or choose a predefined dataset
-st.subheader(" 🚩 Choose a Dataset ")
+st.subheader(" 👾 Choose a Dataset ")
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
 dataset_options = ['penguins', 
                    'titanic', 
                    'diamonds', 
+                   'mpg',
+                   'healthexp', 
+                   'taxis', 
                    'iris', 
                    'tips']
 selected_dataset = st.selectbox(
