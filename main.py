@@ -263,21 +263,11 @@ if df is not None:
                 else:
                     # Generate pairplot
                     pairplot_fig = sns.pairplot(df,
-                            hue=selected_category_column,
-                            vars=numeric_columns,
-                            corner=True,
-                            plot_kws={'alpha': 0.7},
-                            )
-                    
-                    # Adjust the legend position and style
-                    plt.legend(
-                        title = selected_category_column,  # Dynamically set the legend title
-                        loc = 'upper right',               # Place the legend in the upper-right corner
-                        bbox_to_anchor = (1.1, 1),         # Offset the legend slightly to the right
-                        ncol = 1,                          # Adjust to allow wrapping (can change to multi-column)
-                        fontsize = 10,                     # Set the font size of the legend
-                        frameon = True,                    # Add a border to the legend
-                    )
+                                                hue = selected_category_column,
+                                                vars = numeric_columns,
+                                                corner = True,
+                                                plot_kws = {'alpha': 0.7},
+                                               )
                     
                     # Display the plot using Streamlit
                     st.pyplot(pairplot_fig)
