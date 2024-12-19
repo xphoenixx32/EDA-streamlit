@@ -166,7 +166,7 @@ if df is not None:
                         fill = True,
                         cmap = "Blues",
                         ax = ax,
-                        warn_singular = False  # Suppress singular warnings
+                        # warn_singular = False  # Suppress singular warnings
                     )
                     ax.set_title(f'{selected_category_column}: {category}')
                     ax.set_xlabel(selected_x)
