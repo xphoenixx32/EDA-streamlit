@@ -20,7 +20,12 @@ uploaded_file = st.file_uploader(
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
-dataset_options = ['penguins', 'titanic', 'diamonds', 'flights', 'car_crashes', 'iris', 'exercise', 'tips']
+dataset_options = ['penguins', 
+                   'titanic', 
+                   'diamonds', 
+                   'iris', 
+                   'tips', 
+                   'gammas']
 selected_dataset = st.selectbox(
     ' 2️⃣ or Select a Dataset Below 🔻 ',
     ['None'] + dataset_options  # Add 'None' for default empty selection
