@@ -24,8 +24,7 @@ dataset_options = ['penguins',
                    'titanic', 
                    'diamonds', 
                    'iris', 
-                   'tips', 
-                   'gammas']
+                   'tips']
 selected_dataset = st.selectbox(
     ' 2️⃣ or Select a Dataset Below 🔻 ',
     ['None'] + dataset_options  # Add 'None' for default empty selection
