@@ -4,11 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
 
-st.set_page_config(
-    page_title = 'EDA Toolkit',
-    layout = 'wide',
-)
-
 st.title('EDA Toolkit')
 
 sns.set_theme(style="whitegrid")
