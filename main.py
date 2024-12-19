@@ -14,7 +14,7 @@ sns.set_theme(style = "whitegrid")
 st.subheader("Upload or Select a Dataset")
 
 uploaded_file = st.file_uploader(
-    'Choose a CSV file',
+    ' 1️⃣ Upload a CSV file 🔻 ',
     type = 'csv',
 )
 #------------------------------------------------------------------------------------------------------#
@@ -22,7 +22,7 @@ uploaded_file = st.file_uploader(
 # Predefined dataset selection
 dataset_options = ['penguins', 'titanic', 'diamonds', 'iris', 'exercise', 'tips']
 selected_dataset = st.selectbox(
-    'Or select a dataset from the list below:',
+    ' 2️⃣ or Select a Dataset Below 🔻 ',
     ['None'] + dataset_options  # Add 'None' for default empty selection
 )
 #------------------------------------------------------------------------------------------------------#
