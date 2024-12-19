@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
 #------------------------------------------------------------------------------------------------------#
 
-st.title(' ☁ EDA Toolkit ')
+st.title(' EDA Toolkit ')
 sns.set_theme(style = "whitegrid")
 #------------------------------------------------------------------------------------------------------#
 
