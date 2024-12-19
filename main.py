@@ -47,7 +47,7 @@ if uploaded_file is not None:
         unique_values = [str(value) for value in unique_values]  # Ensure all values are string
         selected_value = st.selectbox('Select value',
                                       unique_values,
-                                      key='value_selector_tab3',
+                                      key = 'value_selector_tab3',
                                       )
 
         # Filter DataFrame
@@ -71,12 +71,12 @@ if uploaded_file is not None:
                 st.write(f'Violin plot of {selected_numeric_column} grouped by {selected_category_column}')
 
                 fig, ax = plt.subplots(figsize=(12, 6))
-                sns.violinplot(
-                    data=df,
-                    x=selected_category_column,
-                    y=selected_numeric_column,
-                    palette="muted",
-                    ax=ax,
+                sns.boxplot(
+                    data = df,
+                    x = selected_category_column,
+                    y = selected_numeric_column,
+                    palette = "muted",
+                    ax = ax,
                 )
                 ax.set_title(f'Violin Plot of {selected_numeric_column} by {selected_category_column}')
                 ax.set_xlabel(selected_category_column)
@@ -129,12 +129,12 @@ if uploaded_file is not None:
                     ax = axes[i]
                     filtered_data = df[df[selected_category_column] == category]
                     sns.kdeplot(
-                        data=filtered_data,
-                        x=selected_x,
-                        y=selected_y,
-                        fill=True,
-                        cmap="Blues",
-                        ax=ax
+                        data = filtered_data,
+                        x = selected_x,
+                        y = selected_y,
+                        fill = True,
+                        cmap = "Blues",
+                        ax = ax
                     )
                     ax.set_title(f'{selected_category_column}: {category}')
                     ax.set_xlabel(selected_x)
