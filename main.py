@@ -159,30 +159,18 @@ if df is not None:
                 for i, category in enumerate(unique_category_values):
                     ax = axes[i]
                     filtered_data = df[df[selected_category_column] == category]
-                    
-                    # Check if filtered data has sufficient variance
-                    if len(filtered_data[selected_x].unique()) > 1 and len(filtered_data[selected_y].unique()) > 1:
-                        sns.kdeplot(
-                            data = filtered_data,
-                            x = selected_x,
-                            y = selected_y,
-                            fill = True,
-                            cmap = "Blues",
-                            ax = ax,
-                            warn_singular = False  # Suppress singular warnings
-                        )
-                        ax.set_title(f'{selected_category_column}: {category}')
-                        ax.set_xlabel(selected_x)
-                        ax.set_ylabel(selected_y)
-                    else:
-                        ax.text(0.5, 0.5, 
-                                'Insufficient Data', 
-                                fontsize = 12, 
-                                ha = 'center', 
-                                va = 'center',
-                               )
-                        ax.set_title(f'{selected_category_column}: {category}')
-                        ax.axis('off')
+                    sns.kdeplot(
+                        data = filtered_data,
+                        x = selected_x,
+                        y = selected_y,
+                        fill = True,
+                        cmap = "Blues",
+                        ax = ax,
+                        warn_singular = False  # Suppress singular warnings
+                    )
+                    ax.set_title(f'{selected_category_column}: {category}')
+                    ax.set_xlabel(selected_x)
+                    ax.set_ylabel(selected_y)
 
                 # Hide unused subplots
                 for i in range(num_categories, len(axes)):
