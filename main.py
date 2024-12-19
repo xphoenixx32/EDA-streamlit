@@ -159,18 +159,30 @@ if df is not None:
                 for i, category in enumerate(unique_category_values):
                     ax = axes[i]
                     filtered_data = df[df[selected_category_column] == category]
-                    sns.kdeplot(
-                        data = filtered_data,
-                        x = selected_x,
-                        y = selected_y,
-                        fill = True,
-                        cmap = "Blues",
-                        ax = ax,
-                        warn_singular = False  # Suppress singular warnings
-                    )
-                    ax.set_title(f'{selected_category_column}: {category}')
-                    ax.set_xlabel(selected_x)
-                    ax.set_ylabel(selected_y)
+                    
+                    # Check if filtered data has sufficient variance
+                    if len(filtered_data[selected_x].unique()) > 1 and len(filtered_data[selected_y].unique()) > 1:
+                        sns.kdeplot(
+                            data = filtered_data,
+                            x = selected_x,
+                            y = selected_y,
+                            fill = True,
+                            cmap = "Blues",
+                            ax = ax,
+                            warn_singular = False  # Suppress singular warnings
+                        )
+                        ax.set_title(f'{selected_category_column}: {category}')
+                        ax.set_xlabel(selected_x)
+                        ax.set_ylabel(selected_y)
+                    else:
+                        ax.text(0.5, 0.5, 
+                                'Insufficient Data', 
+                                fontsize = 12, 
+                                ha = 'center', 
+                                va = 'center',
+                               )
+                        ax.set_title(f'{selected_category_column}: {category}')
+                        ax.axis('off')
 
                 # Hide unused subplots
                 for i in range(num_categories, len(axes)):
@@ -178,20 +190,19 @@ if df is not None:
                 
                 # Display the plot
                 st.pyplot(fig)
-
-        st.divider()
     ###################################################
     with tab5:
-        st.warning("1️⃣ Go to [Settings] > [Appearance] > Turn On [Wide Mode]")
-        st.warning("2️⃣ Go to [Developer options] > [Clear cache]")
+        st.warning(" 1️⃣ Go to [Settings] > [Appearance] > Turn On [Wide Mode] ")
+        st.warning(" 2️⃣ Go to [Developer options] > [Clear cache] ")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
-            return StreamlitRenderer(df, spec='./gw_config.json', spec_io_mode='rw')
+            return StreamlitRenderer(df, 
+                                     spec='./gw_config.json', 
+                                     spec_io_mode = 'rw',
+                                    )
 
         renderer = get_pyg_renderer()
         renderer.explorer()
-
-        st.divider()
     ###################################################
 else:
     st.write('Press "Browse Files" to Upload Data or Select a Dataset')
