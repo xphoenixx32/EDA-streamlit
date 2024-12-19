@@ -15,8 +15,7 @@ st.subheader(" 👾 Choose a Dataset ")
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
-dataset_options = ['diamonds', 
-                   'healthexp',
+dataset_options = ['healthexp',
                    'iris', 
                    'mpg',
                    'penguins', 
@@ -26,7 +25,6 @@ dataset_options = ['diamonds',
 
 # Dataset summaries
 dataset_summaries = {
-    'diamonds': "Contains data about over 50,000 diamonds, including attributes like carat weight, cut quality, color, clarity, price, and various dimensions. Useful for statistical analysis of diamond pricing and quality factors.",
     'healthexp': "Health expenditure dataset with data on health-related expenses and outcomes across various countries. Commonly used in health economics and policy analysis.",
     'iris': "Classic dataset containing measurements of sepal and petal lengths and widths for three species of Iris flowers (Setosa, Versicolor, Virginica). Frequently used for machine learning classification tasks.",
     'mpg': "Dataset about fuel efficiency of cars, with attributes such as miles per gallon (MPG), number of cylinders, horsepower, weight, model year, and origin. Often used for regression and exploratory data analysis.",
@@ -196,7 +194,7 @@ if df is not None:
                                       numeric_columns,
                                       key = 'y_axis_selector_tab4',
                                       )
-
+            st.info(" X & Y Should be Different ", icon = "ℹ️")
             if selected_x and selected_y:
                 # Create subplots based on the number of unique category values
                 num_categories = len(unique_category_values)
