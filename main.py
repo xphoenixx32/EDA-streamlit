@@ -242,7 +242,7 @@ if df is not None:
             st.write("Ensure your dataset contains both numeric and categorical columns.")
     #------------------------------------------------------------------------------------------------------#
     with tab6:
-        st.warning(" PairPlot show the Comparison between Numeric Var GroupBy Categorical Var  ")
+        st.warning(" Comparison between Numeric Var GroupBy Categorical Var  ")
         
         # Filter numeric and categorical columns
         numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
