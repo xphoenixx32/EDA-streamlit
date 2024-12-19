@@ -36,11 +36,11 @@ else:
 
 # Proceed only if a dataset is loaded
 if df is not None:
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['Summary', 
-                                            'Filter Viewer', 
-                                            '1-D Plot', 
-                                            '2-D Plot', 
-                                            'Interactive Dashboard'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['1️⃣ Summary Info', 
+                                            '2️⃣ Filter & View', 
+                                            '3️⃣ 1-D Plot', 
+                                            '4️⃣ 2-D Plot', 
+                                            '⛔ Interactive Dashboard'])
 
     ###################################################
     with tab1:
@@ -180,8 +180,7 @@ if df is not None:
                 st.pyplot(fig)
     ###################################################
     with tab5:
-        st.warning(" 1️⃣ Go to [Settings] > [Appearance] > Turn On [Wide Mode] ")
-        st.warning(" 2️⃣ Go to [Developer options] > [Clear cache] ")
+        st.warning(" ⛔ Can only be used by the Developer ")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
             return StreamlitRenderer(df, 
