@@ -12,11 +12,6 @@ sns.set_theme(style = "whitegrid")
 
 # Allow user to upload a file or choose a predefined dataset
 st.subheader("Upload or Select a Dataset")
-
-uploaded_file = st.file_uploader(
-    ' 1️⃣ Upload a CSV file 🔻 ',
-    type = 'csv',
-)
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
@@ -26,18 +21,25 @@ dataset_options = ['penguins',
                    'iris', 
                    'tips']
 selected_dataset = st.selectbox(
-    ' 2️⃣ or Select a Dataset Below 🔻 ',
+    ' 1️⃣ Select a Dataset Below 🔻 ',
     ['None'] + dataset_options  # Add 'None' for default empty selection
 )
 #------------------------------------------------------------------------------------------------------#
 
+uploaded_file = st.file_uploader(
+    ' 2️⃣ or Upload a CSV file 🔻 ',
+    type = 'csv',
+)
+st.warning(" Uploaded File Should Less Than 100k Rows ")
+#------------------------------------------------------------------------------------------------------#
+
 # Load the selected dataset or uploaded file
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.success("CSV file uploaded successfully!")
-elif selected_dataset != 'None':
+if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
-    st.success(f"Loaded `{selected_dataset}` dataset from seaborn.")
+    st.success(f" Have Loaded  `{selected_dataset}`  dataset from seaborn. ")
+elif uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    st.success(" CSV file uploaded successfully! ")
 else:
     df = None
 #------------------------------------------------------------------------------------------------------#
