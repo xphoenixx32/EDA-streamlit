@@ -6,21 +6,46 @@ from pygwalker.api.streamlit import StreamlitRenderer
 
 st.title('EDA Toolkit')
 
-sns.set_theme(style="whitegrid")
+sns.set_theme(style = "whitegrid")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(['Summary', 'Filter Viewer', '1-D Plot', '2-D Plot', 'Interactive Dashboard'])
+# Allow user to upload a file or choose a predefined dataset
+st.subheader("Upload or Select a Dataset")
 
 uploaded_file = st.file_uploader(
     'Choose a CSV file',
-    type='csv',
+    type = 'csv',
 )
 
+# Predefined dataset selection
+dataset_options = ['diamonds', 'iris', 'tips', 'penguins', 'titanic']
+selected_dataset = st.selectbox(
+    'Or select a dataset from the list below:',
+    ['None'] + dataset_options  # Add 'None' for default empty selection
+)
+
+# Load the selected dataset or uploaded file
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
+    st.success("CSV file uploaded successfully!")
+elif selected_dataset != 'None':
+    df = sns.load_dataset(selected_dataset)
+    st.success(f"Loaded `{selected_dataset}` dataset from seaborn.")
+else:
+    df = None
+    st.warning("No dataset loaded. Please upload a file or select a dataset.")
 
-    ###################################################
+# Proceed only if a dataset is loaded
+if df is not None:
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['Summary', 
+                                            'Filter Viewer', 
+                                            '1-D Plot', 
+                                            '2-D Plot', 
+                                            'Interactive Dashboard'])
+
+    ######################################################################################################
     with tab1:
         st.dataframe(df)
+        
         # Only describe numeric columns
         numeric_df = df.select_dtypes(include=['number'])
         if not numeric_df.empty:
@@ -30,10 +55,11 @@ if uploaded_file is not None:
 
         # Data types overview
         data_types = df.dtypes.to_frame('Types')
+        data_types['Types'] = data_types['Types'].astype(str)  # Convert to strings for sorting
         st.write(data_types.sort_values('Types'))
 
         st.divider()
-    ###################################################
+    ######################################################################################################
     with tab2:
         # Filter Data Section
         columns = df.columns.tolist()
@@ -41,37 +67,41 @@ if uploaded_file is not None:
         # Unique keys for selectbox
         selected_column = st.selectbox('Select column to filter by',
                                        columns,
-                                       key='column_selector_tab3',
+                                       key = 'column_selector_tab2',
                                        )
         unique_values = df[selected_column].dropna().unique()  # Drop NaNs for filtering
         unique_values = [str(value) for value in unique_values]  # Ensure all values are string
         selected_value = st.selectbox('Select value',
                                       unique_values,
-                                      key = 'value_selector_tab3',
+                                      key = 'value_selector_tab2',
                                       )
 
         # Filter DataFrame
         filtered_df = df[df[selected_column].astype(str) == selected_value]
         st.write(filtered_df)
-    ###################################################
+    ######################################################################################################
     with tab3:
-        # Filter numeric columns
-        numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
-
-        # Filter categorical columns
-        categorical_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+        # Filter numeric and categorical columns
+        numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
+        categorical_columns = df.select_dtypes(include = ['object', 'category']).columns.tolist()
 
         if numeric_columns and categorical_columns:
             # Allow user to select a categorical column and a numeric column
-            selected_category_column = st.selectbox('Select Categorical Column', categorical_columns, key='category_selector_tab2')
-            selected_numeric_column = st.selectbox('Select Numeric Column', numeric_columns, key='numeric_selector_tab2')
+            selected_category_column = st.selectbox('Select Categorical Column', 
+                                                    categorical_columns, 
+                                                    key = 'category_selector_tab3',
+                                                    )
+            selected_numeric_column = st.selectbox('Select Numeric Column', 
+                                                   numeric_columns, 
+                                                   key = 'numeric_selector_tab3',
+                                                   )
 
             if selected_category_column and selected_numeric_column:
                 # Plot violin plot
                 st.write(f'Violin plot of {selected_numeric_column} grouped by {selected_category_column}')
 
                 fig, ax = plt.subplots(figsize=(12, 6))
-                sns.boxplot(
+                sns.violinplot(
                     data = df,
                     x = selected_category_column,
                     y = selected_numeric_column,
@@ -86,7 +116,7 @@ if uploaded_file is not None:
                 st.pyplot(fig)
         else:
             st.write("Ensure your dataset contains both numeric and categorical columns.")
-    ###################################################
+    ######################################################################################################
     with tab4:
         # Filter numeric columns
         numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
@@ -98,17 +128,18 @@ if uploaded_file is not None:
             # Allow user to select a categorical column
             selected_category_column = st.selectbox('Select Categorical Column',
                                                     categorical_columns,
-                                                    key='category_selector_tab4')
+                                                    key = 'category_selector_tab4',
+                                                    )
             unique_category_values = df[selected_category_column].unique().tolist()
 
             # Allow user to select numeric columns for X and Y axes
             selected_x = st.selectbox('Select X-axis column',
                                       numeric_columns,
-                                      key='x_axis_selector_tab4',
+                                      key = 'x_axis_selector_tab4',
                                       )
             selected_y = st.selectbox('Select Y-axis column',
                                       numeric_columns,
-                                      key='y_axis_selector_tab4',
+                                      key = 'y_axis_selector_tab4',
                                       )
 
             if selected_x and selected_y:
@@ -119,8 +150,8 @@ if uploaded_file is not None:
 
                 # Initialize the figure
                 fig, axes = plt.subplots(rows, cols,
-                                         figsize=(12, 6 * rows),
-                                         constrained_layout=True,
+                                         figsize = (12, 6 * rows),
+                                         constrained_layout = True,
                                          )
                 axes = axes.flatten()  # Flatten axes for easy iteration
 
@@ -134,7 +165,8 @@ if uploaded_file is not None:
                         y = selected_y,
                         fill = True,
                         cmap = "Blues",
-                        ax = ax
+                        ax = ax,
+                        warn_singular = False  # Suppress singular warnings
                     )
                     ax.set_title(f'{selected_category_column}: {category}')
                     ax.set_xlabel(selected_x)
@@ -143,13 +175,15 @@ if uploaded_file is not None:
                 # Hide unused subplots
                 for i in range(num_categories, len(axes)):
                     axes[i].axis('off')
+                
                 # Display the plot
                 st.pyplot(fig)
 
         st.divider()
-    ###################################################
+    ######################################################################################################
     with tab5:
-        st.write("Remember to Switch [Settings] > [Appearance] > Turn On [Wide Mode]")
+        st.warning("1️⃣ Go to [Settings] > [Appearance] > Turn On [Wide Mode]")
+        st.warning("2️⃣ Go to [Developer options] > [Clear cache]")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
             return StreamlitRenderer(df, spec='./gw_config.json', spec_io_mode='rw')
@@ -158,6 +192,6 @@ if uploaded_file is not None:
         renderer.explorer()
 
         st.divider()
-    ###################################################
+    ######################################################################################################
 else:
-    st.write('Press "Browse Files" to Upload Data')
+    st.write('Press "Browse Files" to Upload Data or Select a Dataset')
