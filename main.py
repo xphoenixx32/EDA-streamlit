@@ -42,7 +42,7 @@ if df is not None:
                                             '2-D Plot', 
                                             'Interactive Dashboard'])
 
-    ######################################################################################################
+    ###################################################
     with tab1:
         st.dataframe(df)
         
@@ -59,7 +59,7 @@ if df is not None:
         st.write(data_types.sort_values('Types'))
 
         st.divider()
-    ######################################################################################################
+    ###################################################
     with tab2:
         # Filter Data Section
         columns = df.columns.tolist()
@@ -79,7 +79,7 @@ if df is not None:
         # Filter DataFrame
         filtered_df = df[df[selected_column].astype(str) == selected_value]
         st.write(filtered_df)
-    ######################################################################################################
+    ###################################################
     with tab3:
         # Filter numeric and categorical columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
@@ -116,7 +116,7 @@ if df is not None:
                 st.pyplot(fig)
         else:
             st.write("Ensure your dataset contains both numeric and categorical columns.")
-    ######################################################################################################
+    ###################################################
     with tab4:
         # Filter numeric columns
         numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
@@ -166,7 +166,7 @@ if df is not None:
                         fill = True,
                         cmap = "Blues",
                         ax = ax,
-                        # warn_singular = False  # Suppress singular warnings
+                        warn_singular = False  # Suppress singular warnings
                     )
                     ax.set_title(f'{selected_category_column}: {category}')
                     ax.set_xlabel(selected_x)
@@ -180,7 +180,7 @@ if df is not None:
                 st.pyplot(fig)
 
         st.divider()
-    ######################################################################################################
+    ###################################################
     with tab5:
         st.warning("1️⃣ Go to [Settings] > [Appearance] > Turn On [Wide Mode]")
         st.warning("2️⃣ Go to [Developer options] > [Clear cache]")
@@ -192,6 +192,6 @@ if df is not None:
         renderer.explorer()
 
         st.divider()
-    ######################################################################################################
+    ###################################################
 else:
     st.write('Press "Browse Files" to Upload Data or Select a Dataset')
