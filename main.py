@@ -50,8 +50,8 @@ st.warning(" 💀 Uploaded File Should Less Than 100k Rows ")
 # Load the selected dataset or uploaded file
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
-    st.success(f" ✅ Have Loaded <`{selected_dataset}`> dataset from seaborn. ")
     st.subheader(" ⚡ Dataset Intro ")
+    st.success(f" ✅ Have Loaded <`{selected_dataset}`> dataset from seaborn. ")
     st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
 elif uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
