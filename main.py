@@ -142,42 +142,42 @@ if df is not None:
                                       key = 'y_axis_selector_tab4',
                                       )
 
-            if selected_x and selected_y:
-                # Create subplots based on the number of unique category values
-                num_categories = len(unique_category_values)
-                cols = 2  # Maximum 2 plots per row
-                rows = (num_categories + cols - 1) // cols  # Calculate rows needed
+            # if selected_x and selected_y:
+            #     # Create subplots based on the number of unique category values
+            #     num_categories = len(unique_category_values)
+            #     cols = 2  # Maximum 2 plots per row
+            #     rows = (num_categories + cols - 1) // cols  # Calculate rows needed
 
-                # Initialize the figure
-                fig, axes = plt.subplots(rows, cols,
-                                         figsize = (12, 6 * rows),
-                                         constrained_layout = True,
-                                         )
-                axes = axes.flatten()  # Flatten axes for easy iteration
+            #     # Initialize the figure
+            #     fig, axes = plt.subplots(rows, cols,
+            #                              figsize = (12, 6 * rows),
+            #                              constrained_layout = True,
+            #                              )
+            #     axes = axes.flatten()  # Flatten axes for easy iteration
 
-                # Plot each category
-                for i, category in enumerate(unique_category_values):
-                    ax = axes[i]
-                    filtered_data = df[df[selected_category_column] == category]
-                    sns.kdeplot(
-                        data = filtered_data,
-                        x = selected_x,
-                        y = selected_y,
-                        fill = True,
-                        cmap = "Blues",
-                        ax = ax,
-                        # warn_singular = False  # Suppress singular warnings
-                    )
-                    ax.set_title(f'{selected_category_column}: {category}')
-                    ax.set_xlabel(selected_x)
-                    ax.set_ylabel(selected_y)
+            #     # Plot each category
+            #     for i, category in enumerate(unique_category_values):
+            #         ax = axes[i]
+            #         filtered_data = df[df[selected_category_column] == category]
+            #         sns.kdeplot(
+            #             data = filtered_data,
+            #             x = selected_x,
+            #             y = selected_y,
+            #             fill = True,
+            #             cmap = "Blues",
+            #             ax = ax,
+            #             # warn_singular = False  # Suppress singular warnings
+            #         )
+            #         ax.set_title(f'{selected_category_column}: {category}')
+            #         ax.set_xlabel(selected_x)
+            #         ax.set_ylabel(selected_y)
 
-                # Hide unused subplots
-                for i in range(num_categories, len(axes)):
-                    axes[i].axis('off')
+            #     # Hide unused subplots
+            #     for i in range(num_categories, len(axes)):
+            #         axes[i].axis('off')
                 
-                # Display the plot
-                st.pyplot(fig)
+            #     # Display the plot
+            #     st.pyplot(fig)
 
         st.divider()
     ###################################################
