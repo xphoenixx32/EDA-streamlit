@@ -15,14 +15,27 @@ st.subheader(" 👾 Choose a Dataset ")
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
-dataset_options = ['penguins', 
-                   'titanic', 
-                   'diamonds', 
-                   'mpg',
-                   'healthexp', 
-                   'taxis', 
+dataset_options = ['diamonds', 
+                   'healthexp',
                    'iris', 
-                   'tips']
+                   'mpg',
+                   'penguins', 
+                   'taxis', 
+                   'tips',
+                   'titanic']
+
+# Dataset summaries
+dataset_summaries = {
+    'diamonds': "Contains data about over 50,000 diamonds, including attributes like carat weight, cut quality, color, clarity, price, and various dimensions. Useful for statistical analysis of diamond pricing and quality factors.",
+    'healthexp': "Health expenditure dataset with data on health-related expenses and outcomes across various countries. Commonly used in health economics and policy analysis.",
+    'iris': "Classic dataset containing measurements of sepal and petal lengths and widths for three species of Iris flowers (Setosa, Versicolor, Virginica). Frequently used for machine learning classification tasks.",
+    'mpg': "Dataset about fuel efficiency of cars, with attributes such as miles per gallon (MPG), number of cylinders, horsepower, weight, model year, and origin. Often used for regression and exploratory data analysis.",
+    'penguins': "Data on three species of penguins (Adelie, Chinstrap, Gentoo) including measurements like flipper length, bill dimensions, and body mass. A modern alternative to the iris dataset for classification tasks.",
+    'taxis': "Dataset on taxi rides, including attributes like pickup and drop-off times, distances, fares, and tip amounts. Often used for time series and pricing analysis.",
+    'tips': "Dataset containing information about tips given in a restaurant, with attributes like total bill, tip amount, gender, smoking status, and day of the week. Ideal for statistical and predictive analysis of tipping behavior.",
+    'titanic': "Famous dataset on Titanic passengers, including attributes such as age, sex, class, survival status, and ticket price. Widely used for machine learning classification tasks and survival analysis."
+}
+
 selected_dataset = st.selectbox(
     ' 1️⃣ Select a Dataset Below 🔻 ',
     ['None'] + dataset_options  # Add 'None' for default empty selection
@@ -40,6 +53,7 @@ st.warning(" 💀 Uploaded File Should Less Than 100k Rows ")
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
     st.success(f" ✅ Have Loaded 【`{selected_dataset}`】 dataset from seaborn. ")
+    st.write(dataset_summaries[selected_dataset])
 elif uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.success(" ✅ CSV file uploaded successfully! ")
