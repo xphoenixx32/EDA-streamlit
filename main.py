@@ -217,7 +217,7 @@ if df is not None:
                         x = selected_x,
                         y = selected_y,
                         fill = True,
-                        cmap = "Blues",
+                        cmap = "Greens",
                         ax = ax,
                         warn_singular = False  # Suppress singular warnings
                     )
