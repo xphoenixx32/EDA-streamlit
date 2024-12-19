@@ -297,7 +297,8 @@ if df is not None:
             st.write("Ensure your dataset contains both numeric and categorical columns.")
     #------------------------------------------------------------------------------------------------------#
     with tab7:
-        st.warning(" ⛔ Can only be used by the Developer ")
+        st.warning(" Can only be used by the Developer ", icon = "⛔")
+        st.info(" Switch [Settings] ➡️ [Appearance] ➡️ [Wide Mode] ", icon = "ℹ️")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
             return StreamlitRenderer(df, 
