@@ -266,6 +266,7 @@ if df is not None:
                                                 hue = selected_category_column,
                                                 vars = numeric_columns,
                                                 corner = True,
+                                                plot_kws = {'alpha': 0.7},
                                                 )
                     st.pyplot(pairplot_fig)
         else:
