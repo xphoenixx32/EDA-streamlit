@@ -169,7 +169,7 @@ if df is not None:
             st.write("Ensure your dataset contains both numeric and categorical columns.")
     #------------------------------------------------------------------------------------------------------#
     with tab4:
-        st.warning(" Brief Realization on Cross-Correlation Between Numeric Var ")
+        st.warning(" Brief Realization on Correlation by Categorical Var Between Numeric Var ")
         
         # Filter numeric columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
@@ -186,6 +186,7 @@ if df is not None:
             unique_category_values = df[selected_category_column].unique().tolist()
 
             # Allow user to select numeric columns for X and Y axes
+            st.info(" X & Y Should be Different ", icon = "ℹ️")
             selected_x = st.selectbox('Select X-axis column',
                                       numeric_columns,
                                       key = 'x_axis_selector_tab4',
@@ -194,7 +195,6 @@ if df is not None:
                                       numeric_columns,
                                       key = 'y_axis_selector_tab4',
                                       )
-            st.info(" X & Y Should be Different ", icon = "ℹ️")
             if selected_x and selected_y:
                 # Create subplots based on the number of unique category values
                 num_categories = len(unique_category_values)
