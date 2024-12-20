@@ -45,12 +45,13 @@ uploaded_file = st.file_uploader(
     type = 'csv',
 )
 st.warning(" Uploaded File Should Less Than 100k Rows", icon = "💀")
+st.divider()
 #------------------------------------------------------------------------------------------------------#
 
 # Load the selected dataset or uploaded file
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
-    st.subheader(" ⚡ Dataset Intro ")
+    st.subheader(" ⚡ Brief Intro for this Data ")
     st.success(f" ✅ Have Loaded <`{selected_dataset}`> dataset from seaborn. ")
     st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
 elif uploaded_file is not None:
@@ -58,8 +59,10 @@ elif uploaded_file is not None:
     st.success(" ✅ CSV file uploaded successfully! ")
 else:
     df = None
+st.divider()
 #------------------------------------------------------------------------------------------------------#
 
+st.subheader(" 🎮 Switch Tabs for Different Purposes ")
 # Proceed only if a dataset is loaded
 if df is not None:
     tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([' 🔍 1- Summary Info ', 
