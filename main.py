@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
 #------------------------------------------------------------------------------------------------------#
 
-st.title(' EDA Toolkit ')
+st.title(" Exploratory Data Analysis Toolkit ", icon = "📎")
 sns.set_theme(style = "whitegrid")
 #------------------------------------------------------------------------------------------------------#
 
 # Allow user to upload a file or choose a predefined dataset
-st.subheader(" 👾 Choose a Dataset ")
+st.subheader(" Choose a Dataset ", icon = "👾")
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
@@ -44,7 +44,7 @@ uploaded_file = st.file_uploader(
     ' 2️⃣ or Upload a CSV file 🔻 ',
     type = 'csv',
 )
-st.warning(" 💀 Uploaded File Should Less Than 100k Rows ")
+st.warning(" Uploaded File Should Less Than 100k Rows", icon = "💀")
 #------------------------------------------------------------------------------------------------------#
 
 # Load the selected dataset or uploaded file
@@ -62,36 +62,39 @@ else:
 
 # Proceed only if a dataset is loaded
 if df is not None:
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([' 🔍 Summary Info ', 
-                                                        ' 🔍 Filter & View ', 
-                                                        ' 📊 Violin & Area Plot ', 
-                                                        ' 📊 Cross-Density Plot ', 
-                                                        ' 📊 Correlation Matrix ',
-                                                        ' 📊 Pair Plot ', 
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([' 🔍 1- Summary Info ', 
+                                                        ' 🔍 2- Filter & View ', 
+                                                        ' 📊 3- Violin & Area Plot ', 
+                                                        ' 📊 4- 2D Density Plot ', 
+                                                        ' 📊 5- Corr Matrix ',
+                                                        ' 📊 6- Pair Plot ', 
                                                         ' ⛔ Interactive Dashboard '])
     #------------------------------------------------------------------------------------------------------#
     with tab1:
-        st.warning(" Summary & Data types of the Dataset ")
+        st.warning(" Summary & Data types of the Dataset ", icon = "🕹️")
+        st.info('Here is the Dataset', icon = "1️⃣")
         st.dataframe(df)
         
         st.divider()
-        
-        # Only describe numeric columns
-        numeric_df = df.select_dtypes(include=['number'])
-        if not numeric_df.empty:
-            st.write(numeric_df.describe([.25, .75, .9, .95]))
-        else:
-            st.write("No numeric columns to describe.")
-        
-        st.divider()
-        
+
+        st.info('Data Type of Variables', icon = "2️⃣")
         # Data types overview
         data_types = df.dtypes.to_frame('Types')
         data_types['Types'] = data_types['Types'].astype(str)  # Convert to strings for sorting
         st.write(data_types.sort_values('Types'))
+        
+        st.divider()
+      
+        # Only describe numeric columns
+        st.info('Statistic of Numeric Variables', icon = "3️⃣")
+        numeric_df = df.select_dtypes(include = ['number'])
+        if not numeric_df.empty:
+            st.write(numeric_df.describe([.25, .75, .9, .95]))
+        else:
+            st.write("No numeric columns to describe.")
     #------------------------------------------------------------------------------------------------------#
     with tab2:
-        st.warning(" Filter & View on Specific Column & Value ")
+        st.warning(" Filter & View on Specific Column & Value ", icon = "🕹️")
         # Filter Data Section
         columns = df.columns.tolist()
 
@@ -114,7 +117,7 @@ if df is not None:
         st.write(filtered_df)
     #------------------------------------------------------------------------------------------------------#
     with tab3:
-        st.warning(" Realize the Concentration of Data points ")
+        st.warning(" Realize the Concentration of Data points ", icon = "🕹️")
         
         # Filter numeric and categorical columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
@@ -137,8 +140,7 @@ if df is not None:
 
             if selected_category_column and selected_numeric_column:
                 # #1 Violin plot
-                st.subheader(f'Violin plot of {selected_numeric_column} by {selected_category_column}')
-
+                st.info(f'Violin plot of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
                 fig, ax = plt.subplots(figsize = (12, 6))
                 sns.violinplot(
                     data = df,
@@ -155,8 +157,7 @@ if df is not None:
                 st.divider()
 
                 # #2 Displot
-                st.subheader(f'Area Distribution of {selected_numeric_column} by {selected_category_column}')
-                
+                st.info(f'Area Distribution of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
                 sns_displot = sns.displot(
                     data = df,
                     x = selected_numeric_column,
@@ -170,10 +171,10 @@ if df is not None:
 
                 st.pyplot(sns_displot.fig)
         else:
-            st.write("Ensure your dataset contains both numeric and categorical columns.")
+            st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
     #------------------------------------------------------------------------------------------------------#
     with tab4:
-        st.warning(" Brief Realization on Correlation by Categorical Var Between Numeric Var ")
+        st.warning(" Brief Realization on Correlation by Categorical Var Between Numeric Var ", icon = "🕹️")
         
         # Filter numeric columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
@@ -240,7 +241,7 @@ if df is not None:
                 st.pyplot(fig)
     #------------------------------------------------------------------------------------------------------#
     with tab5:
-        st.warning(" Correlation Matrix between Numeric Var ")
+        st.warning(" Correlation Matrix between Numeric Var ", icon = "🕹️")
         
         # Filter numeric columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
@@ -269,10 +270,10 @@ if df is not None:
             # Display the plot
             st.pyplot(fig)
         else:
-            st.write("Ensure your dataset contains both numeric and categorical columns.")
+            st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
     #------------------------------------------------------------------------------------------------------#
     with tab6:
-        st.warning(" Comparison between Numeric Var GroupBy Categorical Var  ")
+        st.warning(" Comparison between Numeric Var GroupBy Categorical Var  ", icon = "🕹️")
         
         # Filter numeric and categorical columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
@@ -304,7 +305,7 @@ if df is not None:
                     # Display the plot using Streamlit
                     st.pyplot(pairplot_fig)
         else:
-            st.write("Ensure your dataset contains both numeric and categorical columns.")
+            st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
     #------------------------------------------------------------------------------------------------------#
     with tab7:
         st.warning(" Can only be used by the Developer ", icon = "⛔")
@@ -321,4 +322,4 @@ if df is not None:
         renderer.explorer()
     #------------------------------------------------------------------------------------------------------#
 else:
-    st.write('Press "Browse Files" to Upload Data or Select a Dataset')
+    st.write('Press "Browse Files" to Upload Data or Select a Dataset', icon = "📎")
