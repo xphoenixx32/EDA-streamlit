@@ -52,8 +52,8 @@ st.divider()
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
     st.subheader("Brief Intro to this Data")
-    st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn!")
     st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
+    st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn!")
 elif uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.success("✅ CSV file uploaded successfully!")
@@ -67,10 +67,10 @@ st.subheader("🎮 Switch Tabs for Different Purposes")
 if df is not None:
     tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([' 🔍 1:Summary Info ', 
                                                         ' 🔍 2:Filter & View ', 
-                                                        ' 📊 3:Violin & Area Plot ', 
-                                                        ' 📊 4:2D Density Plot ', 
-                                                        ' 📊 5:Corr Matrix ',
-                                                        ' 📊 6:Pair Plot ', 
+                                                        ' 📈 3:Violin & Area Plot ', 
+                                                        ' 📈 4:Density Plot ', 
+                                                        ' 📈 5:Corr Matrix ',
+                                                        ' 📈 6:Pair Plot ', 
                                                         ' ⛔ Interactive Dashboard '])
     #------------------------------------------------------------------------------------------------------#
     with tab1:
