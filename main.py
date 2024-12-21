@@ -121,7 +121,7 @@ if df is not None:
             st.divider()
             
             # Filter DataFrame
-            st.info(f'Filtered Data of {selected_column}', icon = "ℹ️")
+            st.info(f'Filtered Data of {selected_column} = {selected_value}', icon = "1️⃣")
             filtered_df = df[df[selected_column].astype(str) == selected_value]
             st.write("Filtered DataFrame:")
             st.write(filtered_df)
@@ -129,7 +129,7 @@ if df is not None:
             st.divider()
             
             # Calculate Data Groupby Selected-Column
-            st.info(f'Value Count Groupby {selected_column}', icon = "ℹ️")
+            st.info(f'Value Count Groupby {selected_column}', icon = "2️⃣")
             group_stats = df.groupby(selected_column).size().reset_index(name = 'counts')
             st.write(group_stats.sort_values('counts', ascending = False).reset_index(drop = True))
     #------------------------------------------------------------------------------------------------------#
