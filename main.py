@@ -96,29 +96,6 @@ if df is not None:
         else:
             st.write("No numeric columns to describe.")
     #------------------------------------------------------------------------------------------------------#
-    # with tab2:
-    #     st.warning(" Filter & View on Specific Column & Value ", icon = "🕹️")
-    #     # Filter Data Section
-    #     columns = df.columns.tolist()
-
-    #     # Unique keys for selectbox
-    #     selected_column = st.selectbox(
-    #       'Select column to filter by',
-    #       columns,
-    #       key = 'column_selector_tab2',
-    #     )
-    #     unique_values = df[selected_column].dropna().unique()  # Drop NaNs for filtering
-    #     unique_values = [str(value) for value in unique_values]  # Ensure all values are string
-    #     selected_value = st.selectbox(
-    #       'Select value',
-    #       unique_values,
-    #       key = 'value_selector_tab2',
-    #     )
-
-    #     # Filter DataFrame
-    #     filtered_df = df[df[selected_column].astype(str) == selected_value]
-    #     st.write(filtered_df)
-    
     with tab2:
         st.warning(" Filter & View on Specific Column & Value ", icon="🕹️")
         # Filter Data Section
@@ -151,7 +128,7 @@ if df is not None:
             # Calculate Data Groupby Selected-Column
             st.info(f'Value Count Groupby {selected_column}', icon = "ℹ️")
             group_stats = df.groupby(selected_column).size().reset_index(name = 'counts')
-            st.write(group_stats)
+            st.write(group_stats.sort_values('counts', ascending = False).reset_index(drop = True))
     #------------------------------------------------------------------------------------------------------#
     with tab3:
         st.warning(" Realize the Concentration of Data points ", icon = "🕹️")
