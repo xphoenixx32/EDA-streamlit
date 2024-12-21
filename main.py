@@ -325,4 +325,4 @@ if df is not None:
         renderer.explorer()
     #------------------------------------------------------------------------------------------------------#
 else:
-    st.write('🅰️ Select a Seaborn Dataset 🅱️ or Upload a CSV File', icon = "📎")
+    st.error('🅰️ Select a Seaborn Dataset 🅱️ or Upload a CSV File to GET STARTED', icon = "📎")
