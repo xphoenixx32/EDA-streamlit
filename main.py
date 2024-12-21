@@ -181,6 +181,7 @@ if df is not None:
                     hue = selected_category_column,
                     kind = "kde",
                     height = 6,
+                    aspect = 2,
                     multiple = "fill",
                     clip = (0, None),
                     palette = "ch:rot = -.25, hue = 1, light = .75",
@@ -279,7 +280,7 @@ if df is not None:
                 mask = np.triu(np.ones_like(correlation_matrix, dtype=bool))
     
                 # Plot the heatmap
-                fig, ax = plt.subplots(figsize = (16, 9))
+                fig, ax = plt.subplots(figsize = (12, 12))
                 sns.heatmap(
                     correlation_matrix,
                     mask = mask,  # Apply the mask to hide the upper triangle
