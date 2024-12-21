@@ -257,37 +257,6 @@ if df is not None:
                 # Display the plot
                 st.pyplot(fig)
     #------------------------------------------------------------------------------------------------------#
-    # with tab5:
-    #     st.warning(" Correlation Matrix between Numeric Var ", icon = "🕹️")
-        
-    #     # Filter numeric columns
-    #     numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
-        
-    #     if numeric_columns:
-    #         st.write("Numeric columns detected:", numeric_columns)
-            
-    #         # Compute correlation matrix
-    #         correlation_matrix = df[numeric_columns].corr()
-
-    #         # Mask to hide the upper triangle
-    #         mask = np.triu(np.ones_like(correlation_matrix, dtype = bool))
-
-    #         # Plot the heatmap
-    #         fig, ax = plt.subplots(figsize = (10, 8))
-    #         sns.heatmap(
-    #             correlation_matrix,
-    #             mask = mask,  # Apply the mask to hide the upper triangle
-    #             annot = True,
-    #             cmap = "coolwarm",
-    #             fmt = ".2f",
-    #             ax = ax,
-    #         )
-    #         ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
-            
-    #         # Display the plot
-    #         st.pyplot(fig)
-    #     else:
-    #         st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
     with tab5:
         st.warning("Correlation Matrix between Numeric Variables", icon="🕹️")
         
@@ -303,8 +272,6 @@ if df is not None:
             )
             
             if selected_columns:
-                st.write(f"Selected columns: {selected_columns}")
-                
                 # Compute correlation matrix
                 correlation_matrix = df[selected_columns].corr()
     
