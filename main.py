@@ -117,12 +117,15 @@ if df is not None:
                 unique_values,
                 key = 'value_selector_tab2',
             )
-    
+
+            st.divider()
+            
             # Filter DataFrame
             st.info(f'Filtered Data of {selected_column}', icon = "ℹ️")
             filtered_df = df[df[selected_column].astype(str) == selected_value]
             st.write("Filtered DataFrame:")
             st.write(filtered_df)
+            
             st.divider()
             
             # Calculate Data Groupby Selected-Column
