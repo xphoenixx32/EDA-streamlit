@@ -257,37 +257,78 @@ if df is not None:
                 # Display the plot
                 st.pyplot(fig)
     #------------------------------------------------------------------------------------------------------#
+    # with tab5:
+    #     st.warning(" Correlation Matrix between Numeric Var ", icon = "🕹️")
+        
+    #     # Filter numeric columns
+    #     numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
+        
+    #     if numeric_columns:
+    #         st.write("Numeric columns detected:", numeric_columns)
+            
+    #         # Compute correlation matrix
+    #         correlation_matrix = df[numeric_columns].corr()
+
+    #         # Mask to hide the upper triangle
+    #         mask = np.triu(np.ones_like(correlation_matrix, dtype = bool))
+
+    #         # Plot the heatmap
+    #         fig, ax = plt.subplots(figsize = (10, 8))
+    #         sns.heatmap(
+    #             correlation_matrix,
+    #             mask = mask,  # Apply the mask to hide the upper triangle
+    #             annot = True,
+    #             cmap = "coolwarm",
+    #             fmt = ".2f",
+    #             ax = ax,
+    #         )
+    #         ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
+            
+    #         # Display the plot
+    #         st.pyplot(fig)
+    #     else:
+    #         st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
     with tab5:
-        st.warning(" Correlation Matrix between Numeric Var ", icon = "🕹️")
+        st.warning("Correlation Matrix between Numeric Variables", icon="🕹️")
         
         # Filter numeric columns
         numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
         
         if numeric_columns:
-            st.write("Numeric columns detected:", numeric_columns)
-            
-            # Compute correlation matrix
-            correlation_matrix = df[numeric_columns].corr()
-
-            # Mask to hide the upper triangle
-            mask = np.triu(np.ones_like(correlation_matrix, dtype = bool))
-
-            # Plot the heatmap
-            fig, ax = plt.subplots(figsize = (10, 8))
-            sns.heatmap(
-                correlation_matrix,
-                mask = mask,  # Apply the mask to hide the upper triangle
-                annot = True,
-                cmap = "coolwarm",
-                fmt = ".2f",
-                ax = ax,
+            # Put Numeric Var into Multi-Select
+            selected_columns = st.multiselect(
+                "Select numeric columns for Corr Matrix:",
+                numeric_columns,
+                default = numeric_columns,  # default settings for select all numeric
             )
-            ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
             
-            # Display the plot
-            st.pyplot(fig)
+            if selected_columns:
+                st.write(f"Selected columns: {selected_columns}")
+                
+                # Compute correlation matrix
+                correlation_matrix = df[selected_columns].corr()
+    
+                # Mask to hide the upper triangle
+                mask = np.triu(np.ones_like(correlation_matrix, dtype=bool))
+    
+                # Plot the heatmap
+                fig, ax = plt.subplots(figsize = (16, 9))
+                sns.heatmap(
+                    correlation_matrix,
+                    mask = mask,  # Apply the mask to hide the upper triangle
+                    annot = True,
+                    cmap = "coolwarm",
+                    fmt = ".2f",
+                    ax = ax,
+                )
+                ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
+                
+                # 在 Streamlit 中顯示熱力圖
+                st.pyplot(fig)
+            else:
+                st.warning("No columns selected. Please select at least one numeric column.", icon = "⚠️")
         else:
-            st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
+            st.error("Your dataset does not contain any numeric columns.", icon="❗")
     #------------------------------------------------------------------------------------------------------#
     with tab6:
         st.warning(" Comparison between Numeric Var GroupBy Categorical Var  ", icon = "🕹️")
