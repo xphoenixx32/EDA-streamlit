@@ -35,13 +35,13 @@ dataset_summaries = {
 }
 
 selected_dataset = st.selectbox(
-    '🅰️ Select a Seaborn Dataset ⇣',
+    '🅰️ Select a Seaborn Dataset',
     ['None'] + dataset_options  # Add 'None' for default empty selection
 )
 #------------------------------------------------------------------------------------------------------#
 
 uploaded_file = st.file_uploader(
-    '🅱️ or Upload a CSV File ⇣',
+    '🅱️ or Upload a CSV File',
     type = 'csv',
 )
 st.warning("CSV should Less than 100k rows", icon = "💀")
@@ -52,7 +52,7 @@ st.divider()
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
     st.subheader("Brief Intro to this Data")
-    st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn.")
+    st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn!")
     st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
 elif uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
@@ -62,15 +62,15 @@ else:
 st.divider()
 #------------------------------------------------------------------------------------------------------#
 
-st.subheader(" 🎮 Switch Tabs for Different Purposes ")
+st.subheader("🎮 Switch Tabs for Different Purposes")
 # Proceed only if a dataset is loaded
 if df is not None:
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([' 🔍 1- Summary Info ', 
-                                                        ' 🔍 2- Filter & View ', 
-                                                        ' 📊 3- Violin & Area Plot ', 
-                                                        ' 📊 4- 2D Density Plot ', 
-                                                        ' 📊 5- Corr Matrix ',
-                                                        ' 📊 6- Pair Plot ', 
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([' 🔍 1:Summary Info ', 
+                                                        ' 🔍 2:Filter & View ', 
+                                                        ' 📊 3:Violin & Area Plot ', 
+                                                        ' 📊 4:2D Density Plot ', 
+                                                        ' 📊 5:Corr Matrix ',
+                                                        ' 📊 6:Pair Plot ', 
                                                         ' ⛔ Interactive Dashboard '])
     #------------------------------------------------------------------------------------------------------#
     with tab1:
@@ -325,4 +325,4 @@ if df is not None:
         renderer.explorer()
     #------------------------------------------------------------------------------------------------------#
 else:
-    st.write('Press "Browse Files" to Upload Data or Select a Dataset', icon = "📎")
+    st.write('🅰️ Select a Seaborn Dataset 🅱️ or Upload a CSV File', icon = "📎")
