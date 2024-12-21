@@ -131,6 +131,7 @@ if df is not None:
             # Calculate Data Groupby Selected-Column
             st.info(f'Value Count Groupby {selected_column}', icon = "2️⃣")
             group_stats = df.groupby(selected_column).size().reset_index(name = 'counts')
+            group_stats.set_index(selected_column, inplace = True)
             st.write(group_stats.sort_values('counts', ascending = False).reset_index(drop = True))
     #------------------------------------------------------------------------------------------------------#
     with tab3:
@@ -195,6 +196,8 @@ if df is not None:
                     },
                     inplace = True,
                 )
+                grouped_stats.set_index(selected_category_column, inplace = True)
+                
                 st.info(f'Statistical Summary of {selected_numeric_column} grouped by {selected_category_column}', icon = "📊")
                 st.write(grouped_stats.T)
                 
