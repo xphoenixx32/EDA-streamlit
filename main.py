@@ -180,16 +180,18 @@ if df is not None:
                     median = 'median',
                     q3 = lambda x: x.quantile(0.75),
                 ).reset_index()
-            
+
+                grouped_stats[['mean', 'std', 'q1', 'median', 'q3']] = grouped_stats[['mean', 'std', 'q1', 'median', 'q3']].round(3)
+              
                 # Rename Columns of Statistics
                 grouped_stats.rename(
                     columns = {
                         'count': 'Count',
                         'mean': 'Mean',
-                        'std': 'Standard Deviation',
-                        'q1': '25th Percentile (Q1)',
-                        'median': 'Median (Q2)',
-                        'q3': '75th Percentile (Q3)',
+                        'std': 'STD',
+                        'q1': 'Q1',
+                        'median': 'Q2',
+                        'q3': 'Q3',
                     },
                     inplace = True,
                 )
