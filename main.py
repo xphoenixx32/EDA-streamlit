@@ -195,7 +195,7 @@ if df is not None:
                     },
                     inplace = True,
                 )
-                st.info(f'Statistical Summary of {selected_numeric_column} grouped by {selected_category_column}', icon="📊")
+                st.info(f'Statistical Summary of {selected_numeric_column} grouped by {selected_category_column}', icon = "📊")
                 st.write(grouped_stats.T)
                 
                 st.divider()
