@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
 #------------------------------------------------------------------------------------------------------#
 
-st.title(" ⎈ Exploratory Data Analysis Toolkit")
+st.title("Exploratory Data Analysis Toolkit")
 sns.set_theme(style = "whitegrid")
 #------------------------------------------------------------------------------------------------------#
 
 # Allow user to upload a file or choose a predefined dataset
-st.subheader(" 👾 Choose a Dataset ")
+st.subheader("👾 Choose a Dataset")
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
@@ -35,28 +35,28 @@ dataset_summaries = {
 }
 
 selected_dataset = st.selectbox(
-    ' 1️⃣ Select a Dataset Below 🔻 ',
+    '🅰️ Select a Seaborn Dataset ⇣',
     ['None'] + dataset_options  # Add 'None' for default empty selection
 )
 #------------------------------------------------------------------------------------------------------#
 
 uploaded_file = st.file_uploader(
-    ' 2️⃣ or Upload a CSV file 🔻 ',
+    '🅱️ or Upload a CSV File ⇣',
     type = 'csv',
 )
-st.warning(" Uploaded File Should Less Than 100k Rows", icon = "💀")
+st.warning("CSV should Less than 100k rows", icon = "💀")
 st.divider()
 #------------------------------------------------------------------------------------------------------#
 
 # Load the selected dataset or uploaded file
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
-    st.subheader(" ⚡ Brief Intro for this Data ")
-    st.success(f" ✅ Have Loaded <`{selected_dataset}`> dataset from seaborn. ")
+    st.subheader("Brief Intro to this Data")
+    st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn.")
     st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
 elif uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
-    st.success(" ✅ CSV file uploaded successfully! ")
+    st.success("✅ CSV file uploaded successfully!")
 else:
     df = None
 st.divider()
