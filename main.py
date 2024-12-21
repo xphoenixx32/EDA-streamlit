@@ -132,7 +132,7 @@ if df is not None:
             st.info(f'Value Count Groupby {selected_column}', icon = "2️⃣")
             group_stats = df.groupby(selected_column).size().reset_index(name = 'counts')
             group_stats.set_index(selected_column, inplace = True)
-            st.write(group_stats.sort_values('counts', acsending = False))
+            st.write(group_stats.sort_values('counts', ascending = False))
     #------------------------------------------------------------------------------------------------------#
     with tab3:
         st.warning(" Realize the Concentration of Data points ", icon = "🕹️")
