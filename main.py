@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
 #------------------------------------------------------------------------------------------------------#
 
-st.title(" Exploratory Data Analysis Toolkit ")
+st.title(" ⎈ Exploratory Data Analysis Toolkit")
 sns.set_theme(style = "whitegrid")
 #------------------------------------------------------------------------------------------------------#
 
