@@ -181,7 +181,7 @@ if df is not None:
                     hue = selected_category_column,
                     kind = "kde",
                     height = 6,
-                    aspect = 3, # ratio of width:height = aspect
+                    aspect = 1.5, # ratio of width:height = aspect
                     multiple = "fill",
                     clip = (0, None),
                     palette = "ch:rot = -.25, hue = 1, light = .75",
