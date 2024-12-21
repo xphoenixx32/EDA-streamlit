@@ -65,13 +65,13 @@ st.divider()
 st.subheader("🎮 Switch Tabs for Different Purposes")
 # Proceed only if a dataset is loaded
 if df is not None:
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['⌈¹🔍 Summary Info ', 
-                                                        '⌈²🔍 Filter & View ', 
-                                                        '⌈³📈 Violin & Area Plot ', 
-                                                        '⌈⁴📈 Density Plot ', 
-                                                        '⌈⁵📈 Corr Matrix ',
-                                                        '⌈⁶📈 Pair Plot ', 
-                                                        '⌈⛔ Interactive Dashboard '])
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['⎡ ¹🔍 Summary Info⎤', 
+                                                        '⎡ ²🔍 Filter & View⎤', 
+                                                        '⎡ ³📈 Violin & Area Plot⎤', 
+                                                        '⎡ ⁴📈 Density Plot⎤', 
+                                                        '⎡ ⁵📈 Corr Matrix⎤',
+                                                        '⎡ ⁶📈 Pair Plot⎤', 
+                                                        '⎡ ⛔ Interactive Dashboard⎤'])
     #------------------------------------------------------------------------------------------------------#
     with tab1:
         st.warning(" Summary & Data types of the Dataset ", icon = "🕹️")
