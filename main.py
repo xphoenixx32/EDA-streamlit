@@ -170,6 +170,31 @@ if df is not None:
                 ax.set_ylabel(selected_numeric_column)
                 
                 st.pyplot(fig)
+
+                # Calculate Statistics
+                grouped_stats = df.groupby(selected_category_column)[selected_numeric_column].agg(
+                    count = 'count',
+                    mean = 'mean',
+                    std = 'std',
+                    q1 = lambda x: x.quantile(0.25),
+                    median = 'median',
+                    q3 = lambda x: x.quantile(0.75),
+                ).reset_index()
+            
+                # Rename Columns of Statistics
+                grouped_stats.rename(
+                    columns = {
+                        'count': 'Count',
+                        'mean': 'Mean',
+                        'std': 'Standard Deviation',
+                        'q1': '25th Percentile (Q1)',
+                        'median': 'Median (Q2)',
+                        'q3': '75th Percentile (Q3)',
+                    },
+                    inplace = True,
+                )
+                st.info(f'Statistical Summary of {selected_numeric_column} grouped by {selected_category_column}', icon="📊")
+                st.dataframe(grouped_stats)
                 
                 st.divider()
 
