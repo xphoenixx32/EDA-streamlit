@@ -64,20 +64,17 @@ pip install -r requirements.txt
 ### Home Page
 ![Home Page](assets/home_page.png)
 
-### Violin Plot
-![Violin Plot](assets/violin_plot.png)
+### Violin & Area Plot
+![Violin & Area Plot](assets/violin_n_area_plot.png)
 
-### Area Plot
-![Area Plot](assets/area_plot.png)
+### Density Plot
+![Density Plot](assets/density_plot.png)
 
 ### Correlation Matrix
 ![Correlation Matrix](assets/correlation_matrix.png)
 
 ### Pair Plot
 ![Pair Plot](assets/pair_plot.png)
-
-### Interactive Dashboard (Pygwalker)
-![Pygwalker](assets/pygwalker.png)
 
 ## 📂 File Structure
 
