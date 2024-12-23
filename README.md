@@ -3,7 +3,7 @@
 
 Welcome to the **Exploratory Data Analysis Toolkit**, an interactive Streamlit application for visualizing and analyzing datasets with ease.
 
-## Features
+## 📎 Features
 
 - **Dataset Options**:
   - Select a dataset from Seaborn's library (`iris`, `mpg`, `penguins`, `titanic`, etc.).
@@ -28,7 +28,7 @@ Welcome to the **Exploratory Data Analysis Toolkit**, an interactive Streamlit a
 - **Customizable Themes**:
   - Uses Seaborn's `whitegrid` style for clean and professional visuals.
 
-## How to Use
+## 🕹️ How to Use
 
 1. **Run the Application**:
    ```bash
@@ -43,7 +43,7 @@ Welcome to the **Exploratory Data Analysis Toolkit**, an interactive Streamlit a
      - Advanced plots and visualizations.
      - Interactive dashboards.
 
-## Requirements
+## ⚡ Requirements
 
 - **Python**: 3.8 or later
 - **Libraries**:
@@ -59,7 +59,7 @@ Install dependencies with:
 pip install -r requirements.txt
 ```
 
-## Screenshots
+## 📷 Screenshots
 
 ### Home Page
 ![Home Page](assets/home_page.png)
@@ -79,7 +79,7 @@ pip install -r requirements.txt
 ### Interactive Dashboard (Pygwalker)
 ![Pygwalker](assets/pygwalker.png)
 
-## File Structure
+## 📂 File Structure
 
 ```
 ├── main.py            # Streamlit app source code
@@ -88,17 +88,17 @@ pip install -r requirements.txt
 └── README.md          # This README file
 ```
 
-## Contributing
+## 📃 Contributing
 
 Feel free to open issues or submit pull requests for improvements. Contributions are welcome!
 
-## License
+## 🧰 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-### Author
+### 👾 Author
 Developed with ❤️ by [Lean Lin]. 
 
 For any queries or suggestions, please contact:
