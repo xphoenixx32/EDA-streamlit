@@ -2,6 +2,8 @@
 # 🎮 Exploratory Data Analysis Toolkit
 
 Welcome to the **Exploratory Data Analysis Toolkit**, an interactive Streamlit application for visualizing and analyzing datasets with ease.
+[URL to the app](https://data-eda-toolkit-by-leanlinmy.streamlit.app/)
+![Home Page](assets/home_page.png)
 
 ## 📎 Features
 
@@ -60,9 +62,6 @@ pip install -r requirements.txt
 ```
 
 ## 📷 Screenshots
-
-### Home Page
-![Home Page](assets/home_page.png)
 
 ### Violin & Area Plot
 ![Violin & Area Plot](assets/violin_n_area_plot.png)
