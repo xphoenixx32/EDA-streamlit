@@ -98,5 +98,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 Developed with ❤️ by [Lean Lin]. 
 
 For any queries or suggestions, please contact:
-- [Email](mailto:xphoenixx32@gmail.com)
+- [Gmail](mailto:xphoenixx32@gmail.com)
 - [LinkedIn](https://www.linkedin.com/in/leanlin/)
