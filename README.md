@@ -1,7 +1,7 @@
 
 # Exploratory Data Analysis Toolkit
 
-Welcome to the **Exploratory Data Analysis Toolkit**, an interactive Streamlit application for visualizing and analyzing datasets with ease.
+Welcome to the **🎮 Exploratory Data Analysis Toolkit **, an interactive Streamlit application for visualizing and analyzing datasets with ease.
 
 ## Features
 
@@ -67,8 +67,17 @@ pip install -r requirements.txt
 ### Violin Plot
 ![Violin Plot](assets/violin_plot.png)
 
+### Area Plot
+![Area Plot](assets/area_plot.png)
+
 ### Correlation Matrix
 ![Correlation Matrix](assets/correlation_matrix.png)
+
+### Pair Plot
+![Pair Plot](assets/pair_plot.png)
+
+### Interactive Dashboard (Pygwalker)
+![Pygwalker](assets/pygwalker.png)
 
 ## File Structure
 
@@ -90,6 +99,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 ### Author
-Developed with ❤️ by [Your Name]. 
+Developed with ❤️ by [Lean Lin]. 
 
-For any queries or suggestions, please contact [Your Email/LinkedIn/GitHub].
+For any queries or suggestions, please contact:
+- [Email](mailto:xphoenixx32@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/leanlin/)
