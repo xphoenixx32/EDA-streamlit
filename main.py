@@ -365,7 +365,7 @@ if df is not None:
     #------------------------------------------------------------------------------------------------------#
     with tab7:
         st.warning(" This Tab can only be used by the Developer ", icon = "⛔")
-        st.warning(" Remember to [Clear Caches] ", icon = "✂️")
+        st.warning(" Remember to [Clear Cache] ", icon = "✂️")
         st.info(" Switch [Settings] ➡️ [Appearance] ➡️ [Wide Mode] ", icon = "ℹ️")
         @st.cache_resource
         def get_pyg_renderer() -> 'StreamlitRenderer':
