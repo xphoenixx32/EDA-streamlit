@@ -124,11 +124,10 @@ st.divider()
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
     st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn!")
-    st.subheader("🪄 Brief Intro to this Data")
+    st.subheader("🪄 Brief Intro to this Data & Columns")
     st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
     # Display column descriptions
     if selected_dataset in dataset_columns:
-        st.subheader("🪄 Dataset Columns and Descriptions")
         for col, desc in dataset_columns[selected_dataset].items():
             st.markdown(f"**{col}**: {desc}")
 elif uploaded_file is not None:
