@@ -39,7 +39,7 @@ Welcome to the **Exploratory Data Analysis Toolkit**(https://data-eda-toolkit-by
    - Use the tabs to explore different functionalities:
      - Summary and filtering tools.
      - Advanced plots and visualizations.
-     - Interactive dashboards. (Can only be Used by the Developer due to caches issue)
+     - Interactive dashboards. (Can only be Used by the Developer due to Caches Issue)
 
 ## ⚡ Requirements
 
