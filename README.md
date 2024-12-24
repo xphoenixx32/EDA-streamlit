@@ -8,6 +8,7 @@ Welcome to the **Exploratory Data Analysis Toolkit**(https://data-eda-toolkit-by
 - **Dataset Options**:
   1. Select a dataset from Seaborn's library (`iris`, `mpg`, `penguins`, `titanic`, etc.).
       - If you selected a dataset from Seaborn's library, the summary introduction and the columns' description of the dataset will appear:
+
         ![Summary Plot](assets/summary_plot.png)
   2. or Upload your own CSV file (with size less than 100k rows).
 
