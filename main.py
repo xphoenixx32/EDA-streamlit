@@ -34,6 +34,78 @@ dataset_summaries = {
     'titanic': "Famous dataset on Titanic passengers, including attributes such as age, sex, class, survival status, and ticket price. Widely used for machine learning classification tasks and survival analysis."
 }
 
+# Dataset column descriptions
+dataset_columns = {
+    'healthexp': {
+        'country': "Name of the country.",
+        'year': "Year of observation.",
+        'life_exp': "Average life expectancy in years.",
+        'health_exp': "Health expenditure per capita in USD."
+    },
+    'iris': {
+        'sepal_length': "Length of the sepal in cm.",
+        'sepal_width': "Width of the sepal in cm.",
+        'petal_length': "Length of the petal in cm.",
+        'petal_width': "Width of the petal in cm.",
+        'species': "Species of Iris (Setosa, Versicolor, Virginica)."
+    },
+    'mpg': {
+        'mpg': "Miles per gallon, a measure of fuel efficiency.",
+        'cylinders': "Number of cylinders in the car engine.",
+        'displacement': "Engine displacement in cubic inches.",
+        'horsepower': "Horsepower of the car.",
+        'weight': "Weight of the car in pounds.",
+        'acceleration': "Time to accelerate from 0 to 60 mph in seconds.",
+        'model_year': "Year of the car's model (e.g., 70 for 1970).",
+        'origin': "Origin of the car (1: USA, 2: Europe, 3: Japan).",
+        'name': "Name of the car model."
+    },
+    'penguins': {
+        'species': "Species of penguins (Adelie, Chinstrap, Gentoo).",
+        'island': "Island where the penguin was observed.",
+        'bill_length_mm': "Length of the penguin's bill in mm.",
+        'bill_depth_mm': "Depth of the penguin's bill in mm.",
+        'flipper_length_mm': "Length of the penguin's flipper in mm.",
+        'body_mass_g': "Body mass of the penguin in grams.",
+        'sex': "Sex of the penguin (male or female)."
+    },
+    'taxis': {
+        'pickup_datetime': "Date and time of the pickup.",
+        'dropoff_datetime': "Date and time of the drop-off.",
+        'passenger_count': "Number of passengers in the taxi.",
+        'trip_distance': "Distance of the trip in miles.",
+        'fare_amount': "Fare amount in USD.",
+        'tip_amount': "Tip amount given in USD.",
+        'total_amount': "Total amount charged in USD.",
+        'payment_type': "Payment method used (e.g., credit card, cash)."
+    },
+    'tips': {
+        'total_bill': "Total bill amount in USD.",
+        'tip': "Tip amount in USD.",
+        'sex': "Sex of the customer (male or female).",
+        'smoker': "Whether the customer is a smoker (yes or no).",
+        'day': "Day of the week the transaction occurred.",
+        'time': "Time of day (Lunch or Dinner).",
+        'size': "Size of the dining party."
+    },
+    'titanic': {
+        'survived': "Survival status (0: No, 1: Yes).",
+        'pclass': "Passenger class (1: First, 2: Second, 3: Third).",
+        'sex': "Sex of the passenger (male or female).",
+        'age': "Age of the passenger in years.",
+        'sibsp': "Number of siblings/spouses aboard.",
+        'parch': "Number of parents/children aboard.",
+        'fare': "Fare amount paid in USD.",
+        'embarked': "Port of embarkation (C: Cherbourg, Q: Queenstown, S: Southampton).",
+        'class': "Passenger class as a string (First, Second, Third).",
+        'who': "Categorical description of who (man, woman, child).",
+        'deck': "Deck of the ship the passenger was on.",
+        'embark_town': "Town where the passenger embarked.",
+        'alive': "Survival status as a string (yes or no).",
+        'alone': "Whether the passenger was alone (True or False)."
+    }
+}
+
 selected_dataset = st.selectbox(
     '🅰️ Select a Seaborn Dataset',
     ['None'] + dataset_options  # Add 'None' for default empty selection
@@ -52,8 +124,13 @@ st.divider()
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
     st.subheader("Brief Intro to this Data")
-    st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
     st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn!")
+    st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
+    # Display column descriptions
+    if selected_dataset in dataset_columns:
+        st.subheader("Dataset Columns and Descriptions")
+        for col, desc in dataset_columns[selected_dataset].items():
+            st.markdown(f"**{col}**: {desc}")
 elif uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.success("✅ CSV file uploaded successfully!")
