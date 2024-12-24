@@ -53,11 +53,6 @@ Welcome to the **Exploratory Data Analysis Toolkit**(https://data-eda-toolkit-by
   - Matplotlib
   - PyGWalker
 
-Install dependencies with:
-```bash
-pip install -r requirements.txt
-```
-
 ## 📷 Screenshots
 
 ### Violin & Area Plot
