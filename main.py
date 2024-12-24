@@ -123,12 +123,12 @@ st.divider()
 # Load the selected dataset or uploaded file
 if selected_dataset != 'None':
     df = sns.load_dataset(selected_dataset)
-    st.subheader("Brief Intro to this Data")
     st.success(f"✅ Have Loaded <`{selected_dataset}`> dataset from Seaborn!")
+    st.subheader("🪄 Brief Intro to this Data")
     st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
     # Display column descriptions
     if selected_dataset in dataset_columns:
-        st.subheader("Dataset Columns and Descriptions")
+        st.subheader("🪄 Dataset Columns and Descriptions")
         for col, desc in dataset_columns[selected_dataset].items():
             st.markdown(f"**{col}**: {desc}")
 elif uploaded_file is not None:
@@ -142,13 +142,13 @@ st.divider()
 st.subheader("🎮 Switch Tabs for Different Purposes")
 # Proceed only if a dataset is loaded
 if df is not None:
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['⎡ ¹🔍 Summary Info⎤', 
-                                                        '⎡ ²🔍 Filter & View⎤', 
-                                                        '⎡ ³📈 Violin & Area Plot⎤', 
-                                                        '⎡ ⁴📈 Density Plot⎤', 
-                                                        '⎡ ⁵📈 Corr Matrix⎤',
-                                                        '⎡ ⁶📈 Pair Plot⎤', 
-                                                        '⎡ ⛔ Interactive Dashboard⎤'])
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['⎡ ¹🔍 Summary Info', 
+                                                        '⎡ ²🔍 Filter & View', 
+                                                        '⎡ ³📈 Violin & Area Plot', 
+                                                        '⎡ ⁴📈 Density Plot', 
+                                                        '⎡ ⁵📈 Corr Matrix',
+                                                        '⎡ ⁶📈 Pair Plot', 
+                                                        '⎡ ⛔ Interactive Dashboard'])
     #------------------------------------------------------------------------------------------------------#
     with tab1:
         st.warning(" Summary & Data types of the Dataset ", icon = "🕹️")
