@@ -32,14 +32,10 @@ Welcome to the **Exploratory Data Analysis Toolkit**(https://data-eda-toolkit-by
 
 ## 🕹️ How to Use
 
-1. **Run the Application**:
-   ```bash
-   streamlit run main.py
-   ```
-2. **Choose or Upload a Dataset**:
-   - Select a preloaded dataset from the dropdown menu.
+1. **Choose or Upload a Dataset**:
+   - Select a preloaded dataset from the dropdown menu. (Seaborn Dataset)
    - Upload a custom CSV file for analysis.
-3. **Navigate Through Tabs**:
+2. **Navigate Through Tabs**:
    - Use the tabs to explore different functionalities:
      - Summary and filtering tools.
      - Advanced plots and visualizations.
