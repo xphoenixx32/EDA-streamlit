@@ -3,6 +3,8 @@
 
 Welcome to the [**Exploratory Data Analysis Toolkit**](https://data-eda-toolkit-by-leanlinmy.streamlit.app/), an interactive Streamlit application for visualizing and analyzing datasets with ease.
 
+---
+
 ## 📎 Features
 
 - **Dataset Options**:
@@ -31,6 +33,8 @@ Welcome to the [**Exploratory Data Analysis Toolkit**](https://data-eda-toolkit-
 - **Customizable Themes**:
   - Uses Seaborn's `whitegrid` style for clean and professional visuals.
 
+---
+
 ## 🕹️ How to Use
 
 1. **Choose or Upload a Dataset**:
@@ -42,6 +46,8 @@ Welcome to the [**Exploratory Data Analysis Toolkit**](https://data-eda-toolkit-
      - Advanced plots and visualizations.
      - Interactive dashboards. (Can only be Used by the Developer due to Cache Issue)
 
+---
+
 ## ⚡ Requirements
 
 - **Python**: 3.8 or later
@@ -52,6 +58,8 @@ Welcome to the [**Exploratory Data Analysis Toolkit**](https://data-eda-toolkit-
   - NumPy
   - Matplotlib
   - PyGWalker
+
+---
 
 ## 📷 Screenshots
 
@@ -67,14 +75,18 @@ Welcome to the [**Exploratory Data Analysis Toolkit**](https://data-eda-toolkit-
 ### Pair Plot
 ![Pair Plot](assets/pair_plot.png)
 
+---
+
 ## 📂 File Structure
 
 ```
+├── assets/            # Screenshots and visuals for documentation
 ├── main.py            # Streamlit app source code
 ├── requirements.txt   # Python dependencies
-├── assets/            # Screenshots and visuals for documentation
 └── README.md          # This README file
 ```
+
+---
 
 ## 📃 Contributing
 
