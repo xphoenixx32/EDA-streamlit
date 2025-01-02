@@ -113,15 +113,16 @@ with st.sidebar:
   
     selected_dataset = st.selectbox(
         '🅰️ Select a Seaborn Dataset',
-        ['- None -'] + dataset_options  # Add 'None' for default empty selection
+        ['None'] + dataset_options  # Add 'None' for default empty selection
     )
-
+    
     st.divider()
 
     uploaded_file = st.file_uploader(
         '🅱️ or Upload a CSV File',
         type = 'csv',
     )
+    
     st.warning("CSV should Less than 100k rows", icon = "💀")
     #------------------------------------------------------------------------------------------------------#
 
