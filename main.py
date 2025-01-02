@@ -148,16 +148,19 @@ with st.container():
 # Proceed only if a dataset is loaded
 if df is not None:
     if selected == "Info":
-        tab00, tab01 = st.tabs(['⌈ ⁰ Dataset Intro ⌉', 
-                                '⌈ ⁰ Columns Info ⌉'])
-        with tab00:
-            st.subheader("🪄 Brief Intro to this Data")
-            st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
-        with tab01:
-            if selected_dataset in dataset_columns:
-                st.subheader("🪄 Definitions of the Columns")
-                for col, desc in dataset_columns[selected_dataset].items():
-                    st.markdown(f"**{col}**: {desc}")
+        if selected_dataset != 'None':
+            tab00, tab01 = st.tabs(['⌈ ⁰ Dataset Intro ⌉', 
+                                    '⌈ ⁰ Columns Info ⌉'])
+            with tab00:
+                st.subheader("🪄 Brief Intro to this Data")
+                st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
+            with tab01:
+                if selected_dataset in dataset_columns:
+                    st.subheader("🪄 Definitions of the Columns")
+                    for col, desc in dataset_columns[selected_dataset].items():
+                        st.markdown(f"**{col}**: {desc}")
+        else:
+          st.error('This Tab is Only Available for Seaborn Dataset', icon = "⛔")
     #------------------------------------------------------------------------------------------------------#
     if selected == "Summary":
         tab1, tab2 = st.tabs(['⌈ ¹ Dtypes Info ⌉', 
