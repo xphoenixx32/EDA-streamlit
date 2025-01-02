@@ -5,14 +5,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
 from scipy.stats import f_oneway
+from streamlit_option_menu import option_menu
 #------------------------------------------------------------------------------------------------------#
 
 st.title("Exploratory Data Analysis Toolkit")
 sns.set_theme(style = "whitegrid")
-#------------------------------------------------------------------------------------------------------#
-
-# Allow user to upload a file or choose a predefined dataset
-st.subheader("👾 Choose a Dataset")
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
@@ -107,19 +104,24 @@ dataset_columns = {
     }
 }
 
-selected_dataset = st.selectbox(
-    '🅰️ Select a Seaborn Dataset',
-    ['None'] + dataset_options  # Add 'None' for default empty selection
-)
 #------------------------------------------------------------------------------------------------------#
 
-uploaded_file = st.file_uploader(
-    '🅱️ or Upload a CSV File',
-    type = 'csv',
-)
-st.warning("CSV should Less than 100k rows", icon = "💀")
-st.divider()
-#------------------------------------------------------------------------------------------------------#
+
+# Allow user to upload a file or choose a predefined dataset
+with st.sidebar:
+    st.subheader("👾 Choose a Dataset")
+    selected_dataset = st.selectbox(
+        '🅰️ Select a Seaborn Dataset',
+        ['None'] + dataset_options  # Add 'None' for default empty selection
+    )
+    #------------------------------------------------------------------------------------------------------#
+
+    uploaded_file = st.file_uploader(
+        '🅱️ or Upload a CSV File',
+        type = 'csv',
+    )
+    st.warning("CSV should Less than 100k rows", icon = "💀")
+    #------------------------------------------------------------------------------------------------------#
 
 # Load the selected dataset or uploaded file
 if selected_dataset != 'None':
@@ -130,27 +132,24 @@ elif uploaded_file is not None:
     st.success("✅ CSV file uploaded successfully!")
 else:
     df = None
-st.divider()
 #------------------------------------------------------------------------------------------------------#
 
-# Initialize session state for managing sidebar selection
-if "sidebar_option" not in st.session_state:
-    st.session_state.sidebar_option = "Info"
-    
-# Sidebar options
-sidebar_selection = st.sidebar.radio(
-    "Choose an option",
-    ["Info", "Summary", "Plot", "Dashboard"],
-    key = "sidebar_option"
-)
-#------------------------------------------------------------------------------------------------------#
+st.subheader("🎮 Switch Tab")
 
-st.subheader("🎮 Switch Tabs for Different Purposes")
+# Option Menu
+with st.container():
+    selected = option_menu(
+        menu_title = None,
+        options = ["Info", "Summary", "Plot", "Dashboard"],
+        icons = ["info-square-fill", "list-stars", "bar-chart-line-fill", "grid-1x2-fill"],
+        orientation = 'horizontal'
+    )
+
 # Proceed only if a dataset is loaded
 if df is not None:
-    if sidebar_selection == "Info":
-        tab00, tab01 = st.tabs(['Brief Intro', 
-                                'Columns Intro'])
+    if selected == "Info":
+        tab00, tab01 = st.tabs(['⌈ Brief Intro ⌉', 
+                                '⌈ Columns Intro ⌉'])
         with tab00:
             st.subheader("🪄 Brief Intro to this Data")
             st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
@@ -160,17 +159,9 @@ if df is not None:
                 for col, desc in dataset_columns[selected_dataset].items():
                     st.markdown(f"**{col}**: {desc}")
     #------------------------------------------------------------------------------------------------------#
-    # tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['⎡ ¹🔍 Summary Info', 
-    #                                                     '⎡ ²🔍 Filter & View', 
-    #                                                     '⎡ ³📈 Violin & Area Plot', 
-    #                                                     '⎡ ⁴📈 Density Plot', 
-    #                                                     '⎡ ⁵📈 Corr Matrix',
-    #                                                     '⎡ ⁶📈 Pair Plot', 
-    #                                                     '⎡ ⛔ Interactive Dashboard'])
-    #------------------------------------------------------------------------------------------------------#
-    if sidebar_selection == "Summary":
-        tab1, tab2 = st.tabs(['⎡ ¹🔍 Dtypes Info', 
-                              '⎡ ²🔍 Filter & View'])
+    if selected == "Summary":
+        tab1, tab2 = st.tabs(['⌈ ¹ Dtypes Info ⌉', 
+                              '⌈ ² Filter & View ⌉'])
         with tab1:
             st.warning(" Summary & Data types of the Dataset ", icon = "🕹️")
             st.info('Here is the Dataset', icon = "1️⃣")
@@ -179,6 +170,7 @@ if df is not None:
             st.divider()
 
             st.info('Data Type of Variables', icon = "2️⃣")
+            
             # Data types overview
             data_types = df.dtypes.to_frame('Types')
             data_types['Types'] = data_types['Types'].astype(str)  # Convert to strings for sorting
@@ -195,7 +187,7 @@ if df is not None:
                 st.write("No numeric columns to describe.")
         #------------------------------------------------------------------------------------------------------#
         with tab2:
-            st.warning(" Filter & View on Specific Column & Value ", icon="🕹️")
+            st.warning(" Filter & View on Specific Column & Value ", icon = "🕹️")
             # Filter Data Section
             columns = df.columns.tolist()
 
@@ -232,13 +224,15 @@ if df is not None:
                 group_stats.set_index(selected_column, inplace = True)
                 st.write(group_stats.sort_values('counts', ascending = False))
     #------------------------------------------------------------------------------------------------------#
-    if sidebar_selection == "Plot":
-        tab3, tab4, tab5, tab6 = st.tabs(['⎡ ³📈 Violin & Area Plot', 
-                                          '⎡ ⁴📈 Density Plot', 
-                                          '⎡ ⁵📈 Corr Matrix',
-                                          '⎡ ⁶📈 Pair Plot'])
+    if selected == "Plot":
+        tab3, tab4, tab5, tab6, tab7 = st.tabs(['⌈ ³ ANOVA & Violin Plot ⌉', 
+                                                '⌈ ⁴ Area Plot ⌉', 
+                                                '⌈ ⁵ Density Plot ⌉', 
+                                                '⌈ ⁶ Corr Matrix ⌉',
+                                                '⌈ ⁷ Pair Plot ⌉'])
+        #------------------------------------------------------------------------------------------------------#
         with tab3:
-            st.warning(" Realize the Concentration of Data points ", icon = "🕹️")
+            st.warning(" Testing the Statistically Significant Differences ", icon = "🕹️")
             
             # Filter numeric and categorical columns
             numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
@@ -262,10 +256,10 @@ if df is not None:
                 if selected_category_column and selected_numeric_column:
                     # #0 Check the Anova Test
                     # Remove rows with missing values in the selected columns
-                    df = df.dropna(subset=[selected_numeric_column, selected_category_column])
+                    df = df.dropna(subset = [selected_numeric_column, selected_category_column])
 
                     # Ensure the data columns are of the correct type
-                    df[selected_numeric_column] = pd.to_numeric(df[selected_numeric_column], errors='coerce')
+                    df[selected_numeric_column] = pd.to_numeric(df[selected_numeric_column], errors = 'coerce')
                     df[selected_category_column] = df[selected_category_column].astype(str)
 
                     # Retrieve unique category values and group data by categories
@@ -296,7 +290,7 @@ if df is not None:
                     
                     st.divider()
                     
-                    # #1 Violin plot
+                    # Violin plot
                     st.info(f'Violin plot of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
                     fig, ax = plt.subplots(figsize = (12, 6))
                     sns.violinplot(
@@ -312,52 +306,67 @@ if df is not None:
                     st.pyplot(fig)
 
                     # Calculate Statistics
-                    grouped_stats = df.groupby(selected_category_column)[selected_numeric_column].agg(
-                        count = 'count',
-                        mean = 'mean',
-                        std = 'std',
-                        q1 = lambda x: x.quantile(0.25),
-                        median = 'median',
-                        q3 = lambda x: x.quantile(0.75),
-                    ).reset_index()
+                    grouped_stats = df.groupby(selected_category_column)[selected_numeric_column].agg(count = 'count',
+                                                                                                      mean = 'mean',
+                                                                                                      std = 'std',
+                                                                                                      q1 = lambda x: x.quantile(0.25),
+                                                                                                      median = 'median',
+                                                                                                      q3 = lambda x: x.quantile(0.75),
+                                                                                                      ).reset_index()
 
                     grouped_stats[['mean', 'std', 'q1', 'median', 'q3']] = grouped_stats[['mean', 'std', 'q1', 'median', 'q3']].round(3)
                 
                     # Rename Columns of Statistics
-                    grouped_stats.rename(
-                        columns = {
-                            'count': 'Count',
-                            'mean': 'Mean',
-                            'std': 'STD',
-                            'q1': 'Q1',
-                            'median': 'Q2',
-                            'q3': 'Q3',
-                        },
-                        inplace = True,
-                    )
+                    grouped_stats.rename(columns = {'count': 'Count',
+                                                    'mean': 'Mean',
+                                                    'std': 'STD',
+                                                    'q1': 'Q1','median': 'Q2',
+                                                    'q3': 'Q3',
+                                                    },
+                                         inplace = True,
+                                         )
                     grouped_stats.set_index(selected_category_column, inplace = True)
-                        
-                    st.divider()
+            else:
+                st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
+        #------------------------------------------------------------------------------------------------------#
+        with tab4:
+            st.warning(" Realize the Concentration of Data points ", icon = "🕹️")
+            
+            # Filter numeric and categorical columns
+            numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
+            categorical_columns = df.select_dtypes(include = ['object', 'category']).columns.tolist()
 
-                    # #2 Displot
+            if numeric_columns and categorical_columns:
+                # Allow user to select a categorical column and a numeric column
+                selected_category_column = st.selectbox('Select Categorical Column',
+                                                        categorical_columns,
+                                                        key = 'category_selector_tab4',
+                                                        )
+                selected_numeric_column = st.selectbox('Select Numeric Column',
+                                                       numeric_columns,
+                                                       key = 'numeric_selector_tab4',
+                                                       )
+
+                if selected_category_column and selected_numeric_column:
+                    df = df.dropna(subset = [selected_numeric_column, selected_category_column])
+                    # Displot
                     st.info(f'Area Distribution of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
-                    sns_displot = sns.displot(
-                        data = df,
-                        x = selected_numeric_column,
-                        hue = selected_category_column,
-                        kind = "kde",
-                        height = 6,
-                        aspect = 1.5, # ratio of width:height = aspect
-                        multiple = "fill",
-                        clip = (0, None),
-                        palette = "ch:rot = -.25, hue = 1, light = .75",
-                    )
+                    sns_displot = sns.displot(data = df,
+                                              x = selected_numeric_column,
+                                              hue = selected_category_column,
+                                              kind = "kde",
+                                              height = 6,
+                                              aspect = 1.5, # ratio of width:height = aspect
+                                              multiple = "fill",
+                                              clip = (0, None),
+                                              palette = "ch:rot = -.25, hue = 1, light = .75",
+                                              )
 
                     st.pyplot(sns_displot.fig)
             else:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
         #------------------------------------------------------------------------------------------------------#
-        with tab4:
+        with tab5:
             st.warning(" Brief Realization on Correlation by Categorical Var Between Numeric Var ", icon = "🕹️")
             
             # Filter numeric columns
@@ -368,25 +377,22 @@ if df is not None:
 
             if numeric_columns and categorical_columns:
                 # Allow user to select a categorical column
-                selected_category_column = st.selectbox(
-                'Select Categorical Column',
-                categorical_columns,
-                key = 'category_selector_tab4',
-                )
+                selected_category_column = st.selectbox('Select Categorical Column',
+                                                        categorical_columns,
+                                                        key = 'category_selector_tab5',
+                                                        )
                 unique_category_values = df[selected_category_column].unique().tolist()
 
                 # Allow user to select numeric columns for X and Y axes
                 st.info(" X & Y Should be Different ", icon = "ℹ️")
-                selected_x = st.selectbox(
-                'Select X-axis column',
-                numeric_columns,
-                key = 'x_axis_selector_tab4',
-                )
-                selected_y = st.selectbox(
-                'Select Y-axis column',
-                numeric_columns,
-                key = 'y_axis_selector_tab4',
-                )
+                selected_x = st.selectbox('Select X-axis column',
+                                          numeric_columns,
+                                          key = 'x_axis_selector_tab5',
+                                          )
+                selected_y = st.selectbox('Select Y-axis column',
+                                          numeric_columns,
+                                          key = 'y_axis_selector_tab5',
+                                          )
                 if selected_x and selected_y:
                     # Create subplots based on the number of unique category values
                     num_categories = len(unique_category_values)
@@ -405,15 +411,14 @@ if df is not None:
                     for i, category in enumerate(unique_category_values):
                         ax = axes[i]
                         filtered_data = df[df[selected_category_column] == category]
-                        sns.kdeplot(
-                            data = filtered_data,
-                            x = selected_x,
-                            y = selected_y,
-                            fill = True,
-                            cmap = "Greens",
-                            ax = ax,
-                            warn_singular = False  # Suppress singular warnings
-                        )
+                        sns.kdeplot(data = filtered_data,
+                                    x = selected_x,
+                                    y = selected_y,
+                                    fill = True,
+                                    cmap = "Greens",
+                                    ax = ax,
+                                    warn_singular = False,  # Suppress singular warnings
+                                    )
                         ax.set_title(f'{selected_category_column}: {category}')
                         ax.set_xlabel(selected_x)
                         ax.set_ylabel(selected_y)
@@ -424,7 +429,7 @@ if df is not None:
                     # Display the plot
                     st.pyplot(fig)
         #------------------------------------------------------------------------------------------------------#
-        with tab5:
+        with tab6:
             st.warning("Correlation Matrix between Numeric Variables", icon="🕹️")
             
             # Filter numeric columns
@@ -432,11 +437,10 @@ if df is not None:
             
             if numeric_columns:
                 # Put Numeric Var into Multi-Select
-                selected_columns = st.multiselect(
-                    "Select numeric columns for Corr Matrix:",
-                    numeric_columns,
-                    default = numeric_columns,  # default settings for select all numeric
-                )
+                selected_columns = st.multiselect("Select numeric columns for Corr Matrix:",
+                                                  numeric_columns,
+                                                  default = numeric_columns,  # default settings for select all numeric
+                                                  )
                 
                 if selected_columns:
                     # Compute correlation matrix
@@ -447,24 +451,22 @@ if df is not None:
         
                     # Plot the heatmap
                     fig, ax = plt.subplots(figsize = (12, 12))
-                    sns.heatmap(
-                        correlation_matrix,
-                        mask = mask,  # Apply the mask to hide the upper triangle
-                        annot = True,
-                        cmap = "coolwarm",
-                        fmt = ".2f",
-                        ax = ax,
-                    )
+                    sns.heatmap(correlation_matrix,
+                                mask = mask,  # Apply the mask to hide the upper triangle
+                                annot = True,
+                                cmap = "coolwarm",
+                                fmt = ".3f",
+                                ax = ax,
+                                )
                     ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
                     
-                    # 在 Streamlit 中顯示熱力圖
                     st.pyplot(fig)
                 else:
                     st.warning("No columns selected. Please select at least one numeric column.", icon = "⚠️")
             else:
-                st.error("Your dataset does not contain any numeric columns.", icon="❗")
+                st.error("Your dataset does not contain any numeric columns.", icon = "❗")
         #------------------------------------------------------------------------------------------------------#
-        with tab6:
+        with tab7:
             st.warning(" Comparison between Numeric Var GroupBy Categorical Var  ", icon = "🕹️")
             
             # Filter numeric and categorical columns
@@ -475,7 +477,7 @@ if df is not None:
                 selected_category_column = st.selectbox(
                 'Select Categorical Column',
                 categorical_columns,
-                key = 'category_selector_tab6',
+                key = 'category_selector_tab7',
                 )
 
                 if selected_category_column:
@@ -499,7 +501,7 @@ if df is not None:
             else:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
     #------------------------------------------------------------------------------------------------------#
-    if sidebar_selection == "Dashboard":
+    if selected == "Dashboard":
         st.warning(" This Tab can only be used by the Developer ", icon = "⛔")
         st.warning(" Remember to [Clear Cache] ", icon = "✂️")
         st.info(" Switch [Settings] ➡️ [Appearance] ➡️ [Wide Mode] ", icon = "ℹ️")
@@ -515,4 +517,4 @@ if df is not None:
         renderer.explorer()
     #------------------------------------------------------------------------------------------------------#
 else:
-    st.error('🅰️ Select a Seaborn Dataset 🅱️ or Upload a CSV File to GET STARTED', icon = "📎")
+    st.error('Open Side Bar 🅰️ Select a Seaborn Dataset 🅱️ or Upload a CSV File to GET STARTED', icon = "📎")
