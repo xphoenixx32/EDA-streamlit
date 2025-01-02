@@ -505,7 +505,7 @@ if df is not None:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
     #------------------------------------------------------------------------------------------------------#
     if selected == "Dashboard":
-        st.warning(" This Tab can only be used by the Developer ", icon = "⛔")
+        st.error(" This Tab can only be used by the Developer ", icon = "⛔")
         st.warning(" Remember to [Clear Cache] ", icon = "✂️")
         st.info(" Switch [Settings] ➡️ [Appearance] ➡️ [Wide Mode] ", icon = "ℹ️")
         @st.cache_resource
@@ -520,4 +520,4 @@ if df is not None:
         renderer.explorer()
     #------------------------------------------------------------------------------------------------------#
 else:
-    st.error('Click TOP-LEFT Side Bar ">" to GET STARTED', icon = "📎")
+    st.error('Click TOP-LEFT Side Bar to GET STARTED', icon = "📎")
