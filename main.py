@@ -305,6 +305,8 @@ if df is not None:
                     
                     st.pyplot(fig)
 
+                    st.divider()
+                    
                     # Calculate Statistics
                     grouped_stats = df.groupby(selected_category_column)[selected_numeric_column].agg(count = 'count',
                                                                                                       mean = 'mean',
@@ -326,6 +328,7 @@ if df is not None:
                                          inplace = True,
                                          )
                     grouped_stats.set_index(selected_category_column, inplace = True)
+                    st.write(grouped_stats)
             else:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
         #------------------------------------------------------------------------------------------------------#
