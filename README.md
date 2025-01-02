@@ -1,7 +1,7 @@
 
 # 🎮 Exploratory Data Analysis Toolkit
 
-Welcome to the [**Exploratory Data Analysis Toolkit**](https://data-eda-toolkit-by-leanlinmy.streamlit.app/), an interactive Streamlit application for visualizing and analyzing datasets with ease.
+Welcome to the [**Exploratory Data Analysis Toolkit**](https://data-eda-toolkit.streamlit.app/), an interactive Streamlit application for visualizing and analyzing datasets with ease.
 
 ---
 
