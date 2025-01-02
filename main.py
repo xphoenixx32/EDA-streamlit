@@ -148,8 +148,8 @@ with st.container():
 # Proceed only if a dataset is loaded
 if df is not None:
     if selected == "Info":
-        tab00, tab01 = st.tabs(['⌈ Brief Intro ⌉', 
-                                '⌈ Columns Intro ⌉'])
+        tab00, tab01 = st.tabs(['⌈ ⁰ Dataset Intro ⌉', 
+                                '⌈ ⁰ Columns Info ⌉'])
         with tab00:
             st.subheader("🪄 Brief Intro to this Data")
             st.info(dataset_summaries[selected_dataset], icon = "ℹ️")
