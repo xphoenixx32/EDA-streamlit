@@ -520,4 +520,4 @@ if df is not None:
         renderer.explorer()
     #------------------------------------------------------------------------------------------------------#
 else:
-    st.error('Open Side Bar 🅰️ Select a Seaborn Dataset 🅱️ or Upload a CSV File to GET STARTED', icon = "📎")
+    st.error('Click TOP-LEFT Side Bar ">" to GET STARTED', icon = "📎")
