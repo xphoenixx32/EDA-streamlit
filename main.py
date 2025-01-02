@@ -328,7 +328,7 @@ if df is not None:
                                          inplace = True,
                                          )
                     grouped_stats.set_index(selected_category_column, inplace = True)
-                    st.write(grouped_stats)
+                    st.write(grouped_stats.T)
             else:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
         #------------------------------------------------------------------------------------------------------#
