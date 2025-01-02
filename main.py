@@ -233,6 +233,42 @@ if df is not None:
             st.divider()
 
             if selected_category_column and selected_numeric_column:
+                # #0 Check the Anova Test
+                # Remove rows with missing values in the selected columns
+                df = df.dropna(subset=[selected_numeric_column, selected_category_column])
+
+                # Ensure the data columns are of the correct type
+                df[selected_numeric_column] = pd.to_numeric(df[selected_numeric_column], errors='coerce')
+                df[selected_category_column] = df[selected_category_column].astype(str)
+
+                # Retrieve unique category values and group data by categories
+                unique_category_values = df[selected_category_column].unique().tolist()
+                category_groups = [df[df[selected_category_column] == category][selected_numeric_column] for category in unique_category_values]
+
+                # Check if each group has sufficient data
+                for i, group in enumerate(category_groups):
+                    if len(group) < 2:
+                        st.error(f"⛔ Group '{unique_category_values[i]}' does not have enough data for ANOVA analysis!")
+                        st.stop()
+                    if group.var() == 0:
+                        st.error(f"⛔ Group '{unique_category_values[i]}' has constant values, making ANOVA analysis impossible!")
+                        st.stop()
+
+                # Perform ANOVA
+                anova_result = f_oneway(*category_groups)
+
+                # Output the results
+                st.info(f'One-way ANOVA between {selected_category_column} on {selected_numeric_column}', icon = "ℹ️")
+                st.write(f"ANOVA F-statistic: {anova_result.statistic:.3f}")
+                st.write(f"ANOVA p-value: {anova_result.pvalue:.3f}")
+
+                if anova_result.pvalue < 0.05:
+                    st.success("✅ The differences between groups are statistically significant (p < 0.05).")
+                else:
+                    st.warning("⛔ The differences between groups are NOT statistically significant (p >= 0.05).")
+                
+                st.divider()
+              
                 # #1 Violin plot
                 st.info(f'Violin plot of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
                 fig, ax = plt.subplots(figsize = (12, 6))
