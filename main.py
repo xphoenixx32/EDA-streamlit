@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from pygwalker.api.streamlit import StreamlitRenderer
+from scipy.stats import f_oneway
 #------------------------------------------------------------------------------------------------------#
 
 st.title("Exploratory Data Analysis Toolkit")
@@ -235,7 +236,7 @@ if df is not None:
             if selected_category_column and selected_numeric_column:
                 # #0 Check the Anova Test
                 # Remove rows with missing values in the selected columns
-                df = df.dropna(subset=[selected_numeric_column, selected_category_column])
+                df = df.dropna(subset = [selected_numeric_column, selected_category_column])
 
                 # Ensure the data columns are of the correct type
                 df[selected_numeric_column] = pd.to_numeric(df[selected_numeric_column], errors='coerce')
