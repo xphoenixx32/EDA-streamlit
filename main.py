@@ -240,16 +240,14 @@ if df is not None:
 
             if numeric_columns and categorical_columns:
                 # Allow user to select a categorical column and a numeric column
-                selected_category_column = st.selectbox(
-                'Select Categorical Column',
-                categorical_columns,
-                key = 'category_selector_tab3',
-                )
-                selected_numeric_column = st.selectbox(
-                'Select Numeric Column',
-                numeric_columns,
-                key = 'numeric_selector_tab3',
-                )
+                selected_category_column = st.selectbox('Select Categorical Column',
+                                                        categorical_columns,
+                                                        key = 'category_selector_tab3',
+                                                       )
+                selected_numeric_column = st.selectbox('Select Numeric Column',
+                                                       numeric_columns,
+                                                       key = 'numeric_selector_tab3',
+                                                      )
 
                 st.divider()
 
@@ -308,6 +306,7 @@ if df is not None:
                     st.divider()
                     
                     # Calculate Statistics
+                    st.info(f'Statistics of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
                     grouped_stats = df.groupby(selected_category_column)[selected_numeric_column].agg(count = 'count',
                                                                                                       mean = 'mean',
                                                                                                       std = 'std',
