@@ -109,12 +109,14 @@ dataset_columns = {
 
 # Allow user to upload a file or choose a predefined dataset
 with st.sidebar:
-    st.subheader("👾 Choose a Dataset")
+    st.title("👾 Choose a Dataset")
+  
     selected_dataset = st.selectbox(
         '🅰️ Select a Seaborn Dataset',
-        ['None'] + dataset_options  # Add 'None' for default empty selection
+        ['- None -'] + dataset_options  # Add 'None' for default empty selection
     )
-    #------------------------------------------------------------------------------------------------------#
+
+    st.divider()
 
     uploaded_file = st.file_uploader(
         '🅱️ or Upload a CSV File',
@@ -522,4 +524,4 @@ if df is not None:
         renderer.explorer()
     #------------------------------------------------------------------------------------------------------#
 else:
-    st.error('Click TOP-LEFT Side Bar to GET STARTED', icon = "📎")
+    st.error('Click TOP-LEFT Side Bar Navigation to GET STARTED', icon = "📎")
