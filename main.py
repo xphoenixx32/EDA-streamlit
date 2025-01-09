@@ -8,7 +8,7 @@ from scipy.stats import f_oneway
 from streamlit_option_menu import option_menu
 #------------------------------------------------------------------------------------------------------#
 
-st.title("Exploratory Data Analysis Toolkit")
+st.header("Exploratory Data Analysis Toolkit")
 sns.set_theme(style = "whitegrid")
 #------------------------------------------------------------------------------------------------------#
 
