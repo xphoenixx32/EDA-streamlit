@@ -8,7 +8,7 @@ from scipy.stats import f_oneway
 from streamlit_option_menu import option_menu
 #------------------------------------------------------------------------------------------------------#
 
-st.header("Exploratory Data Analysis Toolkit")
+st.header("🧰 Exploratory Data Analysis Toolkit")
 st.caption('''
 *This app aimed to **Simplify the process of understanding datasets** by providing Tools for Statistical insights and Visualizations*
 ''')
