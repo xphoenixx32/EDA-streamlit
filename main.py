@@ -13,6 +13,7 @@ st.caption('''
 *This app aimed to **Simplify the process of understanding datasets** by providing Tools for Statistical insights and Visualizations*
 ''')
 sns.set_theme(style = "whitegrid")
+st.logo("assets/button.png")
 #------------------------------------------------------------------------------------------------------#
 
 # Predefined dataset selection
