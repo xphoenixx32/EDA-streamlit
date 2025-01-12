@@ -382,14 +382,12 @@ if df is not None:
 
                     g = sns.PairGrid(data = df, 
                                      y_vars = selected_numeric_column,
-                                     x_vars = selected_category_column,
+                                     x_vars = [selected_category_column],
                                      height = 5, 
                                      aspect = .5
                                     )
-                  
-                    g.map(sns.pointplot, color = "xkcd:plum")
-                    g.set(ylim = (0, 1))
-                    st.pyplot(sns.despine(fig = g.fig, left = True))
+                    g.map(sns.pointplot, color="xkcd:plum")
+                    st.pyplot(g)
             else:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
         #------------------------------------------------------------------------------------------------------#
