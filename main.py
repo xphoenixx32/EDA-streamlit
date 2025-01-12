@@ -384,9 +384,9 @@ if df is not None:
                                      y_vars = selected_numeric_column,
                                      x_vars = [selected_category_column],
                                      height = 5, 
-                                     aspect = 3.5
+                                     aspect = 1.5
                                     )
-                    g.map(sns.pointplot, color = "xkcd:plum")
+                    g.map(sns.pointplot, color = "xkcd:greenish")
                     st.pyplot(g)
             else:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
