@@ -238,7 +238,7 @@ if df is not None:
     #------------------------------------------------------------------------------------------------------#
     if selected == "Plot":
         tab3, tab4, tab5, tab6, tab7 = st.tabs(['⌈ ³ ANOVA & Violin Plot ⌉', 
-                                                '⌈ ⁴ Area Plot & Pair Grid ⌉', 
+                                                '⌈ ⁴ Area & Point Plot ⌉', 
                                                 '⌈ ⁵ Density & Scatter Plot ⌉', 
                                                 '⌈ ⁶ VIF & Corr Matrix ⌉',
                                                 '⌈ ⁷ Pair Plot ⌉'])
@@ -364,7 +364,7 @@ if df is not None:
                 if selected_category_column and selected_numeric_column:
                     df = df.dropna(subset = [selected_numeric_column, selected_category_column])
                     # Displot
-                    st.info(f'Area Distribution of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
+                    st.info(f'Area Distribution of `{selected_numeric_column}` by `{selected_category_column}`', icon = "ℹ️")
                     sns_displot = sns.displot(data = df,
                                               x = selected_numeric_column,
                                               hue = selected_category_column,
@@ -379,12 +379,12 @@ if df is not None:
                     st.pyplot(sns_displot.fig)
 
                     st.divider()
-
+                    st.info(f'Point Average Plot of `{selected_numeric_column}` across different `{selected_category_column}`', icon = "ℹ️")
                     g = sns.PairGrid(data = df, 
                                      y_vars = selected_numeric_column,
                                      x_vars = [selected_category_column],
                                      height = 5, 
-                                     aspect = 1.5
+                                     aspect = 2.0
                                     )
                     g.map(sns.pointplot, color = "xkcd:greenish")
                     st.pyplot(g)
