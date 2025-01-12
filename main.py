@@ -1,6 +1,7 @@
 import streamlit as st
 import seaborn as sns
 import statsmodels.api as sm
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
