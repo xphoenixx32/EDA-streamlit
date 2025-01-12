@@ -238,7 +238,7 @@ if df is not None:
         tab3, tab4, tab5, tab6, tab7 = st.tabs(['⌈ ³ ANOVA & Violin Plot ⌉', 
                                                 '⌈ ⁴ Area Plot ⌉', 
                                                 '⌈ ⁵ Density Plot ⌉', 
-                                                '⌈ ⁶ Corr Matrix ⌉',
+                                                '⌈ ⁶ VIF & Corr Matrix ⌉',
                                                 '⌈ ⁷ Pair Plot ⌉'])
         #------------------------------------------------------------------------------------------------------#
         with tab3:
@@ -442,19 +442,42 @@ if df is not None:
                     st.pyplot(fig)
         #------------------------------------------------------------------------------------------------------#
         with tab6:
-            st.warning("Correlation Matrix between Numeric Variables", icon="🕹️")
+            st.markdown('''
+                #### *Variance Inflation Factors(VIF) & Correlation Matrix Heatmap*
+            ''')
+            st.warning("Check the Multi-collinearity between Numeric Variables", icon = "🕹️")
             
             # Filter numeric columns
             numeric_columns = df.select_dtypes(include = ['number']).columns.tolist()
             
             if numeric_columns:
                 # Put Numeric Var into Multi-Select
-                selected_columns = st.multiselect("Select numeric columns for Corr Matrix:",
+                selected_columns = st.multiselect("Select `Numeric` columns:",
                                                   numeric_columns,
                                                   default = numeric_columns,  # default settings for select all numeric
                                                   )
+                st.divider()
                 
                 if selected_columns:
+                    # VIF: Variance Inflation Factors
+                    X = df[selected_columns].dropna()
+
+                    # Add an Intercept
+                    X = sm.add_constant(X)
+                    
+                    vif_data = pd.DataFrame()
+                    vif_data["feature"] = X.columns
+                    vif_data["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+                    
+                    st.info(' Use Variance Inflation Factors(`VIF`) to check `Multi-collinearity` ', icon = "ℹ️")
+                    st.write(vif_data)
+                    st.markdown('''
+                                - VIF = 1: No multicollinearity.
+                                - 1 < VIF < 5: Acceptable range.
+                                - VIF ≥ 5 or 10: Severe multicollinearity; consider removing or combining features.
+                    ''')
+                    st.divider()
+
                     # Compute correlation matrix
                     correlation_matrix = df[selected_columns].corr()
         
@@ -462,7 +485,7 @@ if df is not None:
                     mask = np.triu(np.ones_like(correlation_matrix, dtype=bool))
         
                     # Plot the heatmap
-                    fig, ax = plt.subplots(figsize = (12, 12))
+                    fig, ax = plt.subplots(figsize = (12, 9))
                     sns.heatmap(correlation_matrix,
                                 mask = mask,  # Apply the mask to hide the upper triangle
                                 annot = True,
@@ -472,6 +495,7 @@ if df is not None:
                                 )
                     ax.set_title("Correlation Matrix Heatmap (Lower Triangle Only)")
                     
+                    st.info(' Use `Correlation Matrix Heatmap` for further checking ', icon = "ℹ️")
                     st.pyplot(fig)
                 else:
                     st.warning("No columns selected. Please select at least one numeric column.", icon = "⚠️")
