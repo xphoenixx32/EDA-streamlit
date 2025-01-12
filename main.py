@@ -238,7 +238,7 @@ if df is not None:
     #------------------------------------------------------------------------------------------------------#
     if selected == "Plot":
         tab3, tab4, tab5, tab6, tab7 = st.tabs(['⌈ ³ ANOVA & Violin Plot ⌉', 
-                                                '⌈ ⁴ Area Plot ⌉', 
+                                                '⌈ ⁴ Area Plot & Pair Grid ⌉', 
                                                 '⌈ ⁵ Density & Scatter Plot ⌉', 
                                                 '⌈ ⁶ VIF & Corr Matrix ⌉',
                                                 '⌈ ⁷ Pair Plot ⌉'])
@@ -377,6 +377,19 @@ if df is not None:
                                               )
 
                     st.pyplot(sns_displot.fig)
+
+                    st.divider()
+
+                    g = sns.PairGrid(data = df, 
+                                     y_vars = selected_numeric_column,
+                                     x_vars = selected_category_column,
+                                     height = 5, 
+                                     aspect = .5
+                                    )
+                  
+                    g.map(sns.pointplot, color = "xkcd:plum")
+                    g.set(ylim = (0, 1))
+                    st.pyplot(sns.despine(fig = g.fig, left = True))
             else:
                 st.write("Ensure your dataset contains both numeric and categorical columns.", icon = "❗")
         #------------------------------------------------------------------------------------------------------#
@@ -449,7 +462,8 @@ if df is not None:
                                    x = selected_x, 
                                    y = selected_y, 
                                    hue = selected_category_column,
-                                   height = 5
+                                   height = 5,
+                                   aspect = 1.5
                                   )
                     st.pyplot(g)
         #------------------------------------------------------------------------------------------------------#
