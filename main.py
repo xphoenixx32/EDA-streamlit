@@ -239,7 +239,7 @@ if df is not None:
     if selected == "Plot":
         tab3, tab4, tab5, tab6, tab7 = st.tabs(['⌈ ³ ANOVA & Violin Plot ⌉', 
                                                 '⌈ ⁴ Area Plot ⌉', 
-                                                '⌈ ⁵ Density Plot ⌉', 
+                                                '⌈ ⁵ Density & Scatter Plot ⌉', 
                                                 '⌈ ⁶ VIF & Corr Matrix ⌉',
                                                 '⌈ ⁷ Pair Plot ⌉'])
         #------------------------------------------------------------------------------------------------------#
@@ -442,6 +442,16 @@ if df is not None:
                         axes[i].axis('off')
                     # Display the plot
                     st.pyplot(fig)
+
+                    st.divider()
+                  
+                    g = sns.lmplot(data = df,
+                                   x = selected_x, 
+                                   y = selected_y, 
+                                   hue = selected_category_column,
+                                   height = 5
+                                  )
+                    st.pyplot(g)
         #------------------------------------------------------------------------------------------------------#
         with tab6:
             st.markdown('''
