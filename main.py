@@ -364,7 +364,7 @@ if df is not None:
                 if selected_category_column and selected_numeric_column:
                     df = df.dropna(subset = [selected_numeric_column, selected_category_column])
                     # Displot
-                    st.info(f'Area Distribution of `{selected_numeric_column}` by `{selected_category_column}`', icon = "ℹ️")
+                    st.info(f'Area Distribution of {selected_numeric_column} by {selected_category_column}', icon = "ℹ️")
                     sns_displot = sns.displot(data = df,
                                               x = selected_numeric_column,
                                               hue = selected_category_column,
@@ -379,7 +379,7 @@ if df is not None:
                     st.pyplot(sns_displot.fig)
 
                     st.divider()
-                    st.info(f'Point Average Plot of `{selected_numeric_column}` across different `{selected_category_column}`', icon = "ℹ️")
+                    st.info(f'Point Average Plot of {selected_numeric_column} across different {selected_category_column}', icon = "ℹ️")
                     g = sns.PairGrid(data = df, 
                                      y_vars = selected_numeric_column,
                                      x_vars = [selected_category_column],
